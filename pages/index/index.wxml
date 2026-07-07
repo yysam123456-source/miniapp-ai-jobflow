@@ -1,0 +1,44 @@
+<view class="page-container home">
+
+  <!-- 顶部品牌区 -->
+  <view class="hero">
+    <view class="hero__title">AI 求职一站式</view>
+    <view class="hero__sub">证件照编辑 · 简历制作 · AI 润色 · 全免费</view>
+  </view>
+
+  <!-- 双入口卡片 -->
+  <view class="entries">
+    <view
+      wx:for="{{entries}}"
+      wx:key="key"
+      class="entry-card entry-card--{{item.color}}"
+      hover-class="entry-card--hover"
+      bindtap="{{item.key === 'photo' ? 'onEntryPhoto' : 'onEntryResume'}}"
+    >
+      <view class="entry-card__tag">{{item.tag}}</view>
+      <view class="entry-card__title">{{item.title}}</view>
+      <view class="entry-card__desc">{{item.desc}}</view>
+      <view class="entry-card__arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 快捷功能 -->
+  <view class="section-title">快捷功能</view>
+  <view class="quick-grid">
+    <view
+      wx:for="{{quickActions}}"
+      wx:key="key"
+      class="quick-item quick-item--{{item.color}}"
+      hover-class="quick-item--hover"
+      data-key="{{item.key}}"
+      bindtap="onQuick"
+    >
+      <view class="quick-item__label">{{item.label}}</view>
+      <view class="quick-item__sub">{{item.sub}}</view>
+    </view>
+  </view>
+
+  <!-- 底部价值提示 -->
+  <view class="foot-note">所有 AI 能力均基于微信云开发免费额度 · 靠流量主反哺长期</view>
+
+</view>

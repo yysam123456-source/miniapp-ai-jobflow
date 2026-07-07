@@ -1,0 +1,56 @@
+<!-- package-resume/pages/resume/import.wxml -->
+<view class="page-container">
+  <view class="hero">
+    <view class="hero__title">导入旧简历</view>
+    <view class="hero__sub">{{supported}}</view>
+  </view>
+
+  <!-- 证件照关联提示 -->
+  <view wx:if="{{photoAssetId}}" class="photo-tip">
+    <text class="photo-tip__dot">✓</text>
+    <text class="photo-tip__txt">已关联你的证件照，导出时自动嵌入</text>
+  </view>
+  <view wx:else class="photo-tip photo-tip--ghost" bindtap="goPhoto">
+    <text class="photo-tip__txt text-accent">尚未制作证件照？点此去制作 →</text>
+  </view>
+
+  <!-- 方式切换 -->
+  <view class="seg seg--block">
+    <view class="seg-btn {{mode==='file'?'on':''}}" data-mode="file" bindtap="switchMode">文件导入</view>
+    <view class="seg-btn {{mode==='text'?'on':''}}" data-mode="text" bindtap="switchMode">粘贴文本</view>
+  </view>
+
+  <!-- 文件导入 -->
+  <view wx:if="{{mode==='file'}}" class="card import-card">
+    <view class="import-card__head">
+      <text class="import-card__title">从微信聊天文件导入</text>
+      <text class="import-card__desc">选择对方发来的简历文件即可</text>
+    </view>
+    <view class="file-grid">
+      <view wx:for="{{fileTypes}}" wx:key="ext" class="file-chip">
+        <text class="file-chip__ext">{{item.ext}}</text>
+        <text class="file-chip__label">{{item.label}}</text>
+      </view>
+    </view>
+    <button class="btn btn-accent btn-block" bindtap="chooseFile">选择聊天文件</button>
+  </view>
+
+  <!-- 文本粘贴 -->
+  <view wx:else class="card import-card">
+    <view class="import-card__head">
+      <text class="import-card__title">粘贴简历文本</text>
+      <text class="import-card__desc">直接把正文粘贴进来，AI 自动识别结构</text>
+    </view>
+    <textarea class="import-textarea" placeholder="在此粘贴姓名、联系方式、工作经历等内容…" value="{{text}}" bindinput="onTextInput" maxlength="4000"></textarea>
+    <button class="btn btn-accent btn-block" bindtap="parseText">开始解析</button>
+  </view>
+
+  <!-- 解析进度 -->
+  <view wx:if="{{parsing}}" class="card parse-card">
+    <text class="parse-card__title">AI 正在解析你的简历…</text>
+    <view class="progress"><view class="progress-bar" style="width:{{progress}}%"></view></view>
+    <text class="parse-card__pct">{{progress}}%</text>
+  </view>
+
+  <view class="foot-note">文件仅在本地解析并加密存储，我们不会外传你的简历内容。</view>
+</view>

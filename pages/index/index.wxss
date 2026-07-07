@@ -1,0 +1,33 @@
+@import "../../styles/tokens.wxss";
+
+.home { padding-bottom: calc(var(--sp-12) + env(safe-area-inset-bottom)); }
+
+/* 顶部品牌区 */
+.hero { padding: var(--sp-6) var(--page-px) var(--sp-4); }
+.hero__title { font-size: var(--fs-display); font-weight: var(--fw-bold); color: var(--c-ink); }
+.hero__sub { margin-top: var(--sp-2); font-size: var(--fs-caption); color: var(--c-ink-2); }
+
+/* 双入口卡片（.entry-card 基础样式在 components.wxss 全局定义） */
+.entries { display: flex; flex-direction: column; gap: var(--sp-4); padding: 0 var(--page-px); }
+
+/* 快捷功能 */
+.quick-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-3);
+  padding: 0 var(--page-px);
+}
+.quick-item {
+  background: var(--c-card); border-radius: var(--r-md);
+  padding: var(--sp-4); box-shadow: var(--sh-1);
+  transition: transform var(--dur-press) var(--ease-out);
+}
+.quick-item--hover { transform: scale(0.97); }
+.quick-item--brand { border-top: 6rpx solid var(--c-brand); }
+.quick-item--ai { border-top: 6rpx solid var(--c-accent); }
+.quick-item__label { font-size: var(--fs-body); font-weight: var(--fw-semi); color: var(--c-ink); }
+.quick-item__sub { margin-top: 4rpx; font-size: var(--fs-mini); color: var(--c-ink-3); }
+
+/* 底部说明 */
+.foot-note {
+  margin-top: var(--sp-8); text-align: center;
+  font-size: var(--fs-mini); color: var(--c-ink-3);
+}

@@ -1,0 +1,50 @@
+@import "styles/tokens.wxss";
+@import "styles/components.wxss";
+
+/* 全局基础样式 */
+page {
+  background-color: var(--c-page);
+  color: var(--c-ink);
+  font-size: var(--fs-body);
+  font-family: var(--font-stack);
+  line-height: var(--lh-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+view, text, button, input, textarea, image, scroll-view {
+  box-sizing: border-box;
+}
+
+/* 通用容器 */
+.page-container {
+  min-height: 100vh;
+  padding: var(--page-px);
+  padding-bottom: calc(var(--sp-12) + env(safe-area-inset-bottom));
+}
+
+/* 文本工具类 */
+.text-muted { color: var(--c-ink-3); }
+.text-secondary { color: var(--c-ink-2); }
+.text-brand { color: var(--c-brand); }
+.text-accent { color: var(--c-accent); }
+.fw-600 { font-weight: var(--fw-semi); }
+.fw-700 { font-weight: var(--fw-bold); }
+.fs-lg { font-size: var(--fs-h2); }
+.fs-xl { font-size: var(--fs-h1); }
+.fs-2xl { font-size: var(--fs-display); }
+
+/* 区块标题 */
+.section-title {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  color: var(--c-ink);
+  margin: var(--sp-6) 0 var(--sp-3);
+}
+
+/* 降低动效偏好：全局降级（无障碍） */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

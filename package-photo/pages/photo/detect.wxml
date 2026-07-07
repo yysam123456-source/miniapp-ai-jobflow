@@ -1,0 +1,24 @@
+<view class="page-container">
+  <view class="section-title">合规检测报告</view>
+
+  <view class="report card">
+    <view class="report__score">
+      <view class="ring" style="background:{{score >= 90 ? 'var(--c-success)' : score >= 75 ? 'var(--c-warning)' : 'var(--c-danger)'}}">{{score}}</view>
+      <view class="report__score-text">
+        <view class="fw-700 fs-lg">{{score >= 90 ? '优秀' : score >= 75 ? '基本合格' : '需调整'}}</view>
+        <view class="text-muted">综合合规分（100 制）</view>
+      </view>
+    </view>
+
+    <view class="report__items">
+      <view wx:for="{{items}}" wx:key="key" class="item">
+        <view class="item__label">{{item.label}}</view>
+        <view class="item__bar"><view class="item__fill" style="width:{{item.score}}%"></view></view>
+        <view class="item__score {{item.pass ? '' : 'fail'}}">{{item.score}}{{item.pass ? '' : ' ✕'}}</view>
+      </view>
+    </view>
+  </view>
+
+  <button wx:if="{{!loading}}" class="btn btn-primary btn-block reedit-btn" bindtap="reEdit">返回继续编辑</button>
+  <view wx:if="{{loading}}" class="empty">检测中，请稍候…</view>
+</view>

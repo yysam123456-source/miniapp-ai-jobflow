@@ -1,0 +1,75 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/mine/mine",
+    "pages/resume/view"
+  ],
+  "subpackages": [
+    {
+      "root": "package-photo/",
+      "name": "photo",
+      "pages": [
+        "pages/photo/select",
+        "pages/photo/edit",
+        "pages/photo/detect",
+        "pages/photo/export"
+      ]
+    },
+    {
+      "root": "package-resume/",
+      "name": "resume",
+      "pages": [
+        "pages/resume/import",
+        "pages/resume/template",
+        "pages/resume/editor",
+        "pages/resume/polish"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": ["photo"]
+    },
+    "pages/photo/select": {
+      "network": "all",
+      "packages": ["resume"]
+    }
+  },
+  "window": {
+    "navigationBarBackgroundColor": "#16A36E",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "AI 求职一站式",
+    "backgroundColor": "#F5F7FA",
+    "backgroundTextStyle": "light",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "color": "#9AA3AF",
+    "selectedColor": "#16A36E",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.writePhotosAlbum": {
+      "desc": "用于将生成的证件照、简历保存到相册"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getUserProfile"
+  ],
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "renderer": "webview"
+}

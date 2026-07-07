@@ -1,0 +1,20 @@
+{
+  "miniprogramRoot": "./",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "projectname": "miniapp-ai-jobflow",
+  "appid": "wxAPPID_PLACEHOLDER",
+  "description": "AI 求职一站式 · 证件照编辑 + 简历制作 + AI 润色（全免费 CloudBase + 混元）",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "newFeature": true,
+    "bigPackageSizeSupport": true,
+    "ignoreDevUnusedFiles": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "latest",
+  "condition": {}
+}

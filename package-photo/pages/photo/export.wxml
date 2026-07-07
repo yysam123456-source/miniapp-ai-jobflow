@@ -1,0 +1,19 @@
+<view class="page-container">
+  <view class="section-title">导出设置</view>
+  <image class="preview" src="{{preview}}" mode="aspectFit" />
+
+  <view class="section-title">底色</view>
+  <view class="row">
+    <view wx:for="{{bgs}}" wx:key="key"
+      class="chip {{bg === item.key ? 'on' : ''}}" data-key="{{item.key}}" bindtap="chooseBg">{{item.label}}</view>
+  </view>
+
+  <view class="section-title">尺寸</view>
+  <view class="row">
+    <view wx:for="{{sizes}}" wx:key="id"
+      class="chip {{size === item.id ? 'on' : ''}}" data-id="{{item.id}}" bindtap="chooseSize">{{item.label}}</view>
+  </view>
+
+  <button class="btn btn-primary btn-block export-btn" loading="{{exporting}}" bindtap="save">保存到相册</button>
+  <view class="tip">导出文件可同时用于简历头像与各类报名表</view>
+</view>

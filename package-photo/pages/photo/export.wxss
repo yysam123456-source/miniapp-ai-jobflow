@@ -1,0 +1,9 @@
+@import "../../../styles/tokens.wxss";
+
+.preview {
+  width: 300rpx; height: 400rpx; margin: 0 auto;
+  border-radius: var(--r-md); background: #fff; box-shadow: var(--sh-1);
+}
+.row { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.export-btn { margin-top: var(--sp-6); }
+.tip { margin-top: var(--sp-4); text-align: center; font-size: var(--fs-mini); color: var(--c-ink-3); }

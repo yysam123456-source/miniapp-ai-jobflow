@@ -1,0 +1,42 @@
+<!-- package-resume/pages/resume/polish.wxml -->
+<view class="page-container">
+  <view class="head">
+    <text class="head__title">AI 润色</text>
+    <text class="head__sub">STAR 改写 + 量化成果 + JD 匹配</text>
+  </view>
+
+  <!-- 范围 + JD -->
+  <view class="card opt-card">
+    <text class="opt-card__label">优化范围</text>
+    <view class="seg seg--block">
+      <view wx:for="{{scopes}}" wx:key="id" class="seg-btn {{scope===item.id?'on':''}}" data-id="{{item.id}}" bindtap="onScope">{{item.label}}</view>
+    </view>
+    <text class="opt-card__label">目标岗位 / JD（可选）</text>
+    <textarea class="input textarea" value="{{target}}" bindinput="onTarget" placeholder="粘贴招聘要求，AI 会按岗位亮点重点优化" maxlength="800"></textarea>
+  </view>
+
+  <button class="btn btn-accent btn-block" loading="{{running}}" disabled="{{running}}" bindtap="run">
+    {{running ? 'AI 润色中…' : '开始润色'}}
+  </button>
+
+  <!-- 结果 -->
+  <block wx:if="{{hasResult}}">
+    <view class="result-head">
+      <text class="result-head__title">优化建议（{{suggestions.length}} 处）</text>
+      <text class="result-head__hint">点开查看前后对比</text>
+    </view>
+
+    <view wx:for="{{suggestions}}" wx:key="elementId" class="card diff-card">
+      <view class="diff-card__bar" data-index="{{index}}" bindtap="toggleItem">
+        <text class="diff-card__reason">{{item.reason || ('第 ' + (index+1) + ' 处优化')}}</text>
+        <text class="diff-card__arrow">{{item.open ? '收起' : '展开'}}</text>
+      </view>
+      <view wx:if="{{item.open}}" class="diff-card__body">
+        <view class="diff-line diff-line--before"><text class="diff-tag">改前</text><text class="diff-text">{{item.before}}</text></view>
+        <view class="diff-line diff-line--after"><text class="diff-tag diff-tag--ok">改后</text><text class="diff-text">{{item.after}}</text></view>
+      </view>
+    </view>
+
+    <button class="btn btn-primary btn-block export-btn" bindtap="export">导出简历</button>
+  </block>
+</view>

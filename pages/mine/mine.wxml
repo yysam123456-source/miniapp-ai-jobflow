@@ -1,0 +1,48 @@
+<view class="page-container mine">
+
+  <!-- 用户概览 -->
+  <view class="profile card">
+    <view class="profile__avatar">求</view>
+    <view class="profile__meta">
+      <view class="profile__name">求职用户</view>
+      <view class="profile__sub">微信登录 · 全免费权益</view>
+    </view>
+    <view class="chip on">免费</view>
+  </view>
+
+  <!-- 我的作品 -->
+  <view class="section-title">我的作品</view>
+  <view class="works">
+    <view wx:for="{{works}}" wx:key="id" class="work card card-hover">
+      <view class="work__icon work__icon--{{item.type}}">{{item.type === 'photo' ? '照' : '历'}}</view>
+      <view class="work__body">
+        <view class="work__title">{{item.title}}</view>
+        <view class="work__time">{{item.time}}</view>
+      </view>
+      <view class="work__arrow">›</view>
+    </view>
+    <view wx:if="{{works.length === 0}}" class="empty">还没有作品，去首页开始制作吧</view>
+  </view>
+
+  <!-- 快速入口 -->
+  <view class="section-title">快速入口</view>
+  <view class="entries">
+    <view class="entry-card entry-card--brand entry-card--hover" bindtap="goPhoto">
+      <view class="entry-card__title">再做一张证件照</view>
+      <view class="entry-card__desc">抠图 · 换底 · 合规检测</view>
+    </view>
+    <view class="entry-card entry-card--ai entry-card--hover" bindtap="goResume">
+      <view class="entry-card__title">再写一份简历</view>
+      <view class="entry-card__desc">导入 · 模板 · AI 润色</view>
+    </view>
+  </view>
+
+  <!-- 关于 -->
+  <view class="section-title">关于</view>
+  <view class="card about">
+    <view class="about__row"><text>免费声明</text><text class="text-secondary">AI 基于云开发免费额度</text></view>
+    <view class="about__row"><text>清空草稿</text><text class="text-brand" bindtap="onClearDraft">点击清空</text></view>
+  </view>
+
+  <button class="btn btn-accent btn-block share-btn" open-type="share">分享给好友 · 帮朋友求职</button>
+</view>

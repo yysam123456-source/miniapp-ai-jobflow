@@ -1,0 +1,77 @@
+<!-- package-resume/pages/resume/editor.wxml -->
+<view class="page-container">
+  <view class="head">
+    <text class="head__title">编辑简历</text>
+    <text class="head__sub">按需修改任意字段，下一步可 AI 润色</text>
+  </view>
+
+  <!-- 证件照 -->
+  <view class="photo-bar {{hasPhoto?'photo-bar--on':''}}" bindtap="goPhoto">
+    <text class="photo-bar__txt">{{hasPhoto ? '✓ 已关联证件照' : '+ 关联证件照（导出自动嵌入）'}}</text>
+  </view>
+
+  <!-- 基本信息 -->
+  <view class="section">
+    <text class="section-title">基本信息</text>
+    <view class="card form-card">
+      <view class="field"><text class="field__label">姓名</text><input class="input" data-field="name" value="{{form.name}}" bindinput="onField" placeholder="如 张三" /></view>
+      <view class="field"><text class="field__label">求职意向</text><input class="input" data-field="title" value="{{form.title}}" bindinput="onField" placeholder="如 前端工程师" /></view>
+      <view class="field"><text class="field__label">电话</text><input class="input" data-field="phone" value="{{form.phone}}" bindinput="onField" placeholder="手机号" /></view>
+      <view class="field"><text class="field__label">邮箱</text><input class="input" data-field="email" value="{{form.email}}" bindinput="onField" placeholder="邮箱地址" /></view>
+      <view class="field field--col">
+        <text class="field__label">个人简介</text>
+        <textarea class="input textarea" data-field="summary" value="{{form.summary}}" bindinput="onField" placeholder="一句话介绍你自己" maxlength="300"></textarea>
+      </view>
+    </view>
+  </view>
+
+  <!-- 工作经历 -->
+  <view class="section">
+    <view class="section-head">
+      <text class="section-title section-title--flush">工作经历</text>
+      <text class="add-btn" bindtap="addWork">+ 添加</text>
+    </view>
+    <view wx:for="{{form.works}}" wx:key="index" class="card form-card form-card--item">
+      <view class="item-head">
+        <text class="item-head__no">经历 {{index+1}}</text>
+        <text wx:if="{{form.works.length>1}}" class="item-del" data-index="{{index}}" bindtap="removeWork">删除</text>
+      </view>
+      <view class="field"><text class="field__label">公司</text><input class="input" data-list="works" data-index="{{index}}" data-field="company" value="{{item.company}}" bindinput="onItemField" placeholder="公司名称" /></view>
+      <view class="field"><text class="field__label">职位</text><input class="input" data-list="works" data-index="{{index}}" data-field="role" value="{{item.role}}" bindinput="onItemField" placeholder="担任职位" /></view>
+      <view class="field"><text class="field__label">时间</text><input class="input" data-list="works" data-index="{{index}}" data-field="period" value="{{item.period}}" bindinput="onItemField" placeholder="如 2022.06 - 至今" /></view>
+      <view class="field field--col"><text class="field__label">业绩描述</text>
+        <textarea class="input textarea" data-list="works" data-index="{{index}}" data-field="desc" value="{{item.desc}}" bindinput="onItemField" placeholder="用 STAR 法描述，量化成果" maxlength="600"></textarea>
+      </view>
+    </view>
+  </view>
+
+  <!-- 教育经历 -->
+  <view class="section">
+    <view class="section-head">
+      <text class="section-title section-title--flush">教育经历</text>
+      <text class="add-btn" bindtap="addEdu">+ 添加</text>
+    </view>
+    <view wx:for="{{form.education}}" wx:key="index" class="card form-card form-card--item">
+      <view class="item-head">
+        <text class="item-head__no">教育 {{index+1}}</text>
+        <text wx:if="{{form.education.length>1}}" class="item-del" data-index="{{index}}" bindtap="removeEdu">删除</text>
+      </view>
+      <view class="field"><text class="field__label">学校</text><input class="input" data-list="education" data-index="{{index}}" data-field="school" value="{{item.school}}" bindinput="onItemField" placeholder="学校名称" /></view>
+      <view class="field"><text class="field__label">专业 / 学历</text><input class="input" data-list="education" data-index="{{index}}" data-field="major" value="{{item.major}}" bindinput="onItemField" placeholder="如 计算机科学 本科" /></view>
+      <view class="field"><text class="field__label">时间</text><input class="input" data-list="education" data-index="{{index}}" data-field="period" value="{{item.period}}" bindinput="onItemField" placeholder="如 2018.09 - 2022.06" /></view>
+    </view>
+  </view>
+
+  <!-- 技能 -->
+  <view class="section">
+    <text class="section-title">技能特长</text>
+    <view class="card form-card">
+      <textarea class="input textarea textarea--tall" data-field="skills" value="{{form.skills}}" bindinput="onField" placeholder="用顿号分隔，如 英语六级、React、数据分析" maxlength="300"></textarea>
+    </view>
+  </view>
+
+  <view class="footer safe-bottom">
+    <button class="btn btn-ghost btn-block" bindtap="saveDraft">保存草稿</button>
+    <button class="btn btn-accent btn-block" bindtap="goPolish">下一步：AI 润色</button>
+  </view>
+</view>

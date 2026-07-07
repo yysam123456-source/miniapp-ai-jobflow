@@ -1,0 +1,11 @@
+@import "../../../styles/tokens.wxss";
+
+.sources { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-3); }
+.source { padding: var(--sp-5); text-align: center; }
+.source__icon { font-size: 64rpx; }
+.source__label { margin-top: var(--sp-2); font-size: var(--fs-body); font-weight: var(--fw-semi); color: var(--c-ink); }
+.source__sub { font-size: var(--fs-mini); color: var(--c-ink-3); }
+
+.presets { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+.tip { margin-top: var(--sp-6); text-align: center; font-size: var(--fs-mini); color: var(--c-ink-3); }

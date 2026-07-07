@@ -1,0 +1,62 @@
+<view class="edit">
+
+  <!-- 预览舞台 -->
+  <view class="stage">
+    <image wx:if="{{preview}}" class="stage__img" src="{{preview}}" mode="aspectFit" />
+    <view wx:if="{{processing}}" class="stage__chip">AI 处理中…</view>
+  </view>
+
+  <!-- 工具 Tab 横滑 -->
+  <scroll-view scroll-x class="tool-tabs">
+    <view wx:for="{{tabs}}" wx:key="key"
+      class="tool-tab {{activeTab === item.key ? 'on' : ''}}"
+      data-key="{{item.key}}" bindtap="switchTab">{{item.label}}</view>
+  </scroll-view>
+
+  <!-- 面板 -->
+  <view class="panel">
+    <!-- 换底 -->
+    <view wx:if="{{activeTab === 'bg'}}" class="panel__row">
+      <view wx:for="{{bgColors}}" wx:key="key"
+        class="chip {{bg === item.key ? 'on' : ''}}" data-key="{{item.key}}" bindtap="chooseBg">{{item.label}}</view>
+    </view>
+
+    <!-- 美颜 -->
+    <view wx:elif="{{activeTab === 'beauty'}}" class="panel__sliders">
+      <view class="slider-row">
+        <text class="slider-row__label">磨皮</text>
+        <slider min="0" max="100" value="{{beauty.smooth}}" activeColor="#16A36E"
+          data-field="smooth" bindchanging="onBeautyChange" bindchange="onBeautyChange" />
+      </view>
+      <view class="slider-row">
+        <text class="slider-row__label">美白</text>
+        <slider min="0" max="100" value="{{beauty.whiten}}" activeColor="#16A36E"
+          data-field="whiten" bindchanging="onBeautyChange" bindchange="onBeautyChange" />
+      </view>
+      <button class="btn btn-primary btn-sm" bindtap="applyBeauty">应用美颜</button>
+    </view>
+
+    <!-- 排版 -->
+    <view wx:elif="{{activeTab === 'layout'}}" class="panel__row">
+      <view wx:for="{{sizes}}" wx:key="id"
+        class="chip {{size === item.id ? 'on' : ''}}" data-id="{{item.id}}" bindtap="chooseSize">{{item.label}} · {{item.spec}}</view>
+    </view>
+
+    <!-- 去水印 -->
+    <view wx:elif="{{activeTab === 'watermark'}}" class="panel__hint">
+      <text>长按预览图上需要去除的水印区域涂抹标记，松开自动修复</text>
+    </view>
+
+    <!-- 抠图 / 裁剪 -->
+    <view wx:else class="panel__hint">
+      <text wx:if="{{activeTab === 'matting'}}">已自动智能抠图，可到「换底」选择底色</text>
+      <text wx:else>拖动裁剪框调整构图，支持常用证件照比例</text>
+    </view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="actions safe-bottom">
+    <button class="btn btn-ghost" bindtap="goDetect">合规检测</button>
+    <button class="btn btn-primary btn-block" bindtap="goExport">保存 / 导出</button>
+  </view>
+</view>

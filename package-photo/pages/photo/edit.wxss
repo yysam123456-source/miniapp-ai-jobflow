@@ -1,0 +1,42 @@
+@import "../../../styles/tokens.wxss";
+
+.edit { display: flex; flex-direction: column; min-height: 100vh; background: var(--c-page); }
+
+/* 预览舞台 */
+.stage {
+  position: relative; flex: 1; min-height: 640rpx;
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--sp-6); background: var(--c-surface);
+}
+.stage__img {
+  width: 420rpx; height: 560rpx; border-radius: var(--r-md);
+  background: #fff; box-shadow: var(--sh-2);
+}
+.stage__chip {
+  position: absolute; top: var(--sp-3); right: var(--sp-3);
+  background: rgba(22,24,28,0.82); color: #fff; font-size: var(--fs-caption);
+  padding: 10rpx 20rpx; border-radius: var(--r-pill);
+  animation: fadeIn var(--dur-page) var(--ease-out);
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* 面板 */
+.panel { padding: var(--sp-4) var(--page-px); background: var(--c-card); }
+.panel__row { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.panel__sliders { display: flex; flex-direction: column; gap: var(--sp-3); }
+.slider-row { display: flex; align-items: center; gap: var(--sp-3); }
+.slider-row__label { width: 80rpx; font-size: var(--fs-body); color: var(--c-ink); }
+.slider-row slider { flex: 1; }
+.panel__hint { font-size: var(--fs-caption); color: var(--c-ink-2); line-height: var(--lh-loose); }
+
+/* 底部操作 */
+.actions {
+  display: flex; gap: var(--sp-3); padding: var(--sp-3) var(--page-px);
+  background: var(--c-card); border-top: 1rpx solid var(--c-border);
+}
+.actions .btn-ghost { flex: 0 0 auto; }
+.actions .btn-primary { flex: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stage__chip { animation: none; }
+}

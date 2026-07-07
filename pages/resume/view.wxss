@@ -1,0 +1,33 @@
+/* pages/resume/view.wxss */
+@import "../../styles/tokens.wxss";
+@import "../../styles/components.wxss";
+
+.head { padding: var(--sp-6) 0 var(--sp-3); }
+.head__title { display: block; font-size: var(--fs-display); font-weight: var(--fw-bold); color: var(--c-ink); }
+.head__sub { display: block; margin-top: var(--sp-2); font-size: var(--fs-caption); color: var(--c-ink-2); }
+
+.resume-card { padding: var(--sp-5); margin-bottom: var(--sp-5); }
+.resume-card__top { display: flex; align-items: center; gap: var(--sp-4); }
+.resume-card__ava {
+  flex: 0 0 96rpx; height: 96rpx; border-radius: 50%;
+  background: var(--grad-accent); color: #fff;
+  font-size: var(--fs-h1); font-weight: var(--fw-bold);
+  display: flex; align-items: center; justify-content: center;
+}
+.resume-card__id { display: flex; flex-direction: column; gap: 6rpx; }
+.resume-card__name { font-size: var(--fs-h1); font-weight: var(--fw-bold); color: var(--c-ink); }
+.resume-card__title { font-size: var(--fs-caption); color: var(--c-accent-700); }
+.resume-card__line { margin-top: var(--sp-3); font-size: var(--fs-caption); color: var(--c-ink-2); }
+
+.section { margin-bottom: var(--sp-5); }
+.set-card { padding: var(--sp-2) var(--sp-4); }
+.set-row { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-3) 0; }
+.set-row--last { border-top: 1rpx solid var(--c-divider); }
+.set-row__label { font-size: var(--fs-body); color: var(--c-ink); font-weight: var(--fw-medium); }
+
+.footer {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  display: flex; gap: var(--sp-3); padding: var(--sp-3) var(--page-px);
+  background: linear-gradient(180deg, rgba(245,246,248,0), var(--c-page) 40%);
+}
+.footer .btn { flex: 1; }

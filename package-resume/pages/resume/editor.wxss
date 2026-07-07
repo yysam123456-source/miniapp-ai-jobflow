@@ -1,0 +1,40 @@
+/* package-resume/pages/resume/editor.wxss */
+@import "../../../styles/tokens.wxss";
+@import "../../../styles/components.wxss";
+
+.head { padding: var(--sp-6) 0 var(--sp-3); }
+.head__title { display: block; font-size: var(--fs-display); font-weight: var(--fw-bold); color: var(--c-ink); }
+.head__sub { display: block; margin-top: var(--sp-2); font-size: var(--fs-caption); color: var(--c-ink-2); }
+
+.photo-bar {
+  display: flex; align-items: center; padding: var(--sp-3) var(--sp-4);
+  background: var(--c-accent-50); border-radius: var(--r-md); margin-bottom: var(--sp-4);
+}
+.photo-bar--on { background: var(--c-brand-50); }
+.photo-bar__txt { font-size: var(--fs-caption); font-weight: var(--fw-semi); color: var(--c-accent-700); }
+.photo-bar--on .photo-bar__txt { color: var(--c-brand-700); }
+
+.section { margin-bottom: var(--sp-5); }
+.section-title--flush { margin-bottom: var(--sp-3); }
+.section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sp-3); }
+.add-btn { font-size: var(--fs-caption); font-weight: var(--fw-semi); color: var(--c-brand-700); }
+
+.form-card { padding: var(--sp-2) var(--sp-4); }
+.form-card--item { padding: var(--sp-4); margin-bottom: var(--sp-3); }
+.item-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-2); }
+.item-head__no { font-size: var(--fs-caption); font-weight: var(--fw-bold); color: var(--c-ink-2); }
+.item-del { font-size: var(--fs-caption); color: var(--c-danger); }
+
+.field { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-2) 0; }
+.field--col { flex-direction: column; align-items: stretch; gap: var(--sp-2); }
+.field__label { flex: 0 0 140rpx; font-size: var(--fs-caption); color: var(--c-ink-2); }
+.field .input { flex: 1; }
+.textarea { width: 100%; height: 160rpx; line-height: var(--lh-base); padding: var(--sp-3); box-sizing: border-box; }
+.textarea--tall { height: 200rpx; }
+
+.footer {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  display: flex; gap: var(--sp-3); padding: var(--sp-3) var(--page-px);
+  background: linear-gradient(180deg, rgba(245,246,248,0), var(--c-page) 40%);
+}
+.footer .btn { flex: 1; }

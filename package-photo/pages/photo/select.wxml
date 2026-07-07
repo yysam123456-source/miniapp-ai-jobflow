@@ -1,0 +1,21 @@
+<view class="page-container">
+  <view class="section-title">选择照片来源</view>
+  <view class="sources">
+    <view wx:for="{{sources}}" wx:key="key" class="source card card-hover" data-key="{{item.key}}" bindtap="chooseSource">
+      <view class="source__icon">{{item.key === 'camera' ? '📷' : '🖼️'}}</view>
+      <view class="source__label">{{item.label}}</view>
+      <view class="source__sub">{{item.sub}}</view>
+    </view>
+  </view>
+
+  <view class="section-title">选择规格（可后续更改）</view>
+  <view class="presets">
+    <view wx:for="{{presets}}" wx:key="id"
+      class="chip {{selectedPreset === item.id ? 'on' : ''}}"
+      data-id="{{item.id}}" bindtap="selectPreset">
+      {{item.label}} · {{item.spec}}
+    </view>
+  </view>
+
+  <view class="tip">AI 能力基于微信云开发免费额度，生成即合规可用</view>
+</view>
