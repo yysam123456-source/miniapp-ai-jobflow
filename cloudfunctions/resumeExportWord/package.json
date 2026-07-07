@@ -1,0 +1,10 @@
+{
+  "name": "resumeExportWord",
+  "version": "1.0.0",
+  "description": "简历导出 Word",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3",
+    "docx": "~9.0.0"
+  }
+}

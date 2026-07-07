@@ -1,7 +1,9 @@
 // utils/cloud.js — 云函数统一调用层
 // 封装 wx.cloud.callFunction，自动处理统一返回结构 ApiResponse<T>：
 //   code: 0=成功, 1001=参数, 1002=额度, 2001=未登录, 3001=内容安全, 4001=AI不可用, 5000=内部错误
-// 同时统一错误 toast、额度耗尽引导、登录失效兜底。
+// 额度耗尽（1002）：若配置了激励视频广告，引导观看并在奖励后自动回写额度并重试一次。
+const cfg = require('../config');
+const { getOpenid } = require('./auth');
 
 const TOAST_CODE = {
   1001: '参数有误，请重试',
@@ -12,25 +14,59 @@ const TOAST_CODE = {
   5000: '服务开小差了，请重试',
 };
 
+let rewardedAd = null;
+function getAd() {
+  if (!cfg.AD_REWARD_UNIT_ID || !wx.createRewardedVideoAd) return null;
+  if (!rewardedAd) {
+    rewardedAd = wx.createRewardedVideoAd({ adUnitId: cfg.AD_REWARD_UNIT_ID });
+  }
+  return rewardedAd;
+}
+function watchAd() {
+  return new Promise((resolve) => {
+    const ad = getAd();
+    if (!ad) return resolve(false);
+    const onClose = (res) => {
+      ad.offClose(onClose);
+      resolve(!!(res && res.isEnded));
+    };
+    ad.onClose(onClose);
+    ad.show().catch(() => ad.load().then(() => ad.show()).catch(() => resolve(false)));
+  });
+}
+
 /**
  * 调用云函数，返回 data 字段（成功时）。
  * @param {string} name 云函数名
  * @param {object} data 入参
- * @param {object} [opt] { silent: 是否静默（不自动 toast） }
- * @returns {Promise<any>} resolve 为 res.data.data
+ * @param {object} [opt] { silent, _retried }
  */
 function call(name, data = {}, opt = {}) {
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
       name,
       data,
-      success: (res) => {
+      success: async (res) => {
         const body = res.result || {};
         if (body.code === 0) {
           resolve(body.data);
           return;
         }
-        // 额度耗尽：引导看广告（流量主反哺）
+        // 额度耗尽：引导看广告 → 回写额度 → 自动重试一次
+        if (body.code === 1002 && !opt.silent && cfg.AD_REWARD_UNIT_ID && !opt._retried) {
+          const rewarded = await watchAd();
+          if (rewarded) {
+            await call('quotaGrant', { openid: getOpenid() }, { silent: true }).catch(() => {});
+            try {
+              const retry = await call(name, data, Object.assign({}, opt, { _retried: true }));
+              resolve(retry);
+              return;
+            } catch (e) {
+              reject(e);
+              return;
+            }
+          }
+        }
         if (body.code === 1002 && !opt.silent) {
           wx.showModal({
             title: '免费额度已用完',

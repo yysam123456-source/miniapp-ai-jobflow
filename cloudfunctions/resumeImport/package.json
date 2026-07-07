@@ -1,0 +1,11 @@
+{
+  "name": "resumeImport",
+  "version": "1.0.0",
+  "description": "简历导入解析",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3",
+    "pdf-parse": "~1.1.1",
+    "mammoth": "^1.11.0"
+  }
+}

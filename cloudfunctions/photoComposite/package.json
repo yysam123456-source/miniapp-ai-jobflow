@@ -1,0 +1,10 @@
+{
+  "name": "photoComposite",
+  "version": "1.0.0",
+  "description": "证件照换底/美颜",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3",
+    "sharp": "~0.33.4"
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "timeout": 30,
+  "runtime": "Nodejs18.15"
+}

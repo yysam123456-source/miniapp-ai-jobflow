@@ -1,0 +1,10 @@
+{
+  "name": "photoExport",
+  "version": "1.0.0",
+  "description": "证件照规格导出",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3",
+    "sharp": "~0.33.4"
+  }
+}

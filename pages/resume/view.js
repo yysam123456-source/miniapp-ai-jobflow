@@ -56,7 +56,7 @@ Page({
     }
     this.setData({ exporting: true });
     const name = kind === 'word' ? 'resumeExportWord' : 'resumeExportPdf';
-    const payload = { openid: getOpenid(), resumeId: draft.resumeId || '' };
+    const payload = { openid: getOpenid(), resumeId: draft.resumeId || '', resumeData: draft.resumeData || undefined };
     if (kind === 'pdf') {
       payload.locale = this.data.locale;
       payload.photoAssetId = this.data.includePhoto ? (draft.photoAssetId || '') : '';

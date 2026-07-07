@@ -1,0 +1,9 @@
+{
+  "name": "resumeApply",
+  "version": "1.0.0",
+  "description": "简历套用模板",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

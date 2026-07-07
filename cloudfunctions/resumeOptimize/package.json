@@ -1,0 +1,9 @@
+{
+  "name": "resumeOptimize",
+  "version": "1.0.0",
+  "description": "简历 AI 润色",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

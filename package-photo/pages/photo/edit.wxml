@@ -1,9 +1,9 @@
 <view class="edit">
 
   <!-- 预览舞台 -->
-  <view class="stage">
+  <view class="stage stage--{{layout}}">
     <image wx:if="{{preview}}" class="stage__img" src="{{preview}}" mode="aspectFit" />
-    <view wx:if="{{processing}}" class="stage__chip">AI 处理中…</view>
+    <view wx:if="{{processing}}" class="stage__chip">处理中…</view>
   </view>
 
   <!-- 工具 Tab 横滑 -->
@@ -21,6 +21,15 @@
         class="chip {{bg === item.key ? 'on' : ''}}" data-key="{{item.key}}" bindtap="chooseBg">{{item.label}}</view>
     </view>
 
+    <!-- 裁剪（端内 canvas） -->
+    <view wx:elif="{{activeTab === 'crop'}}" class="panel__col">
+      <view class="panel__row">
+        <view wx:for="{{sizes}}" wx:key="id"
+          class="chip {{cropSize === item.id ? 'on' : ''}}" data-id="{{item.id}}" bindtap="chooseCropSize">{{item.label}} · {{item.spec}}</view>
+      </view>
+      <button class="btn btn-primary btn-sm" bindtap="onCrop">按规格裁剪</button>
+    </view>
+
     <!-- 美颜 -->
     <view wx:elif="{{activeTab === 'beauty'}}" class="panel__sliders">
       <view class="slider-row">
@@ -36,21 +45,21 @@
       <button class="btn btn-primary btn-sm" bindtap="applyBeauty">应用美颜</button>
     </view>
 
+    <!-- 水印（端内 canvas） -->
+    <view wx:elif="{{activeTab === 'watermark'}}" class="panel__col">
+      <input class="input" placeholder="输入水印文字（如：AI 证件照）" value="{{watermarkText}}" bindinput="onWatermarkInput" />
+      <button class="btn btn-primary btn-sm" bindtap="onWatermark">添加水印</button>
+    </view>
+
     <!-- 排版 -->
     <view wx:elif="{{activeTab === 'layout'}}" class="panel__row">
-      <view wx:for="{{sizes}}" wx:key="id"
-        class="chip {{size === item.id ? 'on' : ''}}" data-id="{{item.id}}" bindtap="chooseSize">{{item.label}} · {{item.spec}}</view>
+      <view wx:for="{{layouts}}" wx:key="key"
+        class="chip {{layout === item.key ? 'on' : ''}}" data-key="{{item.key}}" bindtap="chooseLayout">{{item.label}}</view>
     </view>
 
-    <!-- 去水印 -->
-    <view wx:elif="{{activeTab === 'watermark'}}" class="panel__hint">
-      <text>长按预览图上需要去除的水印区域涂抹标记，松开自动修复</text>
-    </view>
-
-    <!-- 抠图 / 裁剪 -->
+    <!-- 抠图 -->
     <view wx:else class="panel__hint">
-      <text wx:if="{{activeTab === 'matting'}}">已自动智能抠图，可到「换底」选择底色</text>
-      <text wx:else>拖动裁剪框调整构图，支持常用证件照比例</text>
+      <text>已自动智能抠图，可到「换底」选择底色，或用「裁剪 / 水印」在本地完成调整</text>
     </view>
   </view>
 
@@ -59,4 +68,7 @@
     <button class="btn btn-ghost" bindtap="goDetect">合规检测</button>
     <button class="btn btn-primary btn-block" bindtap="goExport">保存 / 导出</button>
   </view>
+
+  <!-- 离屏画布（裁剪/水印） -->
+  <canvas type="2d" id="workCanvas" class="work-canvas"></canvas>
 </view>

@@ -45,6 +45,7 @@ Page({
     call('resumeOptimize', {
       openid: getOpenid(),
       resumeId: draft.resumeId || '',
+      resumeData: draft.resumeData || undefined,
       target: this.data.target || undefined,
       scope: this.data.scope,
     }, { silent: true })

@@ -1,0 +1,10 @@
+{
+  "name": "photoMatting",
+  "version": "1.0.0",
+  "description": "证件照抠图（透明 PNG）",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3",
+    "sharp": "~0.33.4"
+  }
+}

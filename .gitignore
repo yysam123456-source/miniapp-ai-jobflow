@@ -1,2 +1,13 @@
 .workbuddy/
 .DS_Store
+
+# 云函数本地依赖（部署时云端安装）
+cloudfunctions/**/node_modules/
+cloudfunctions/**/_shared/
+
+# 机密配置（绝不入库；用 config.local.example.js 模板）
+cloudfunctions/**/config.local.js
+config.local.js
+
+# 字体等大文件（用户自行放置，不入库）
+cloudfunctions/_shared/fonts/

@@ -1,10 +1,11 @@
 // app.js — 全局初始化：云环境、静默登录、工作流状态机入口
 const { ensureLogin } = require('./utils/auth');
+const cfg = require('./config');
 
 App({
   globalData: {
-    // 微信云开发环境 ID（在公众平台「云开发」控制台获取后替换）
-    env: 'CLOUDBASE_ENV_ID_PLACEHOLDER',
+    // 微信云开发环境 ID（在 config.js 填写，或公众平台「云开发」控制台获取）
+    env: cfg.CLOUDBASE_ENV_ID,
     openid: null,
     // 跨页面传递的临时工作流上下文（照片 assetId / resumeId / templateId）
     draft: null,
