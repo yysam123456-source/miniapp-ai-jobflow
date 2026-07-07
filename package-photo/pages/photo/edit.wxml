@@ -3,6 +3,8 @@
   <!-- 预览舞台 -->
   <view class="stage stage--{{layout}}">
     <image wx:if="{{preview}}" class="stage__img" src="{{preview}}" mode="aspectFit" />
+    <canvas wx:if="{{masking}}" type="2d" id="maskCanvas" class="mask-canvas"
+      bindtouchstart="onMaskTouch" bindtouchmove="onMaskTouch"></canvas>
     <view wx:if="{{processing}}" class="stage__chip">处理中…</view>
   </view>
 
@@ -45,10 +47,43 @@
       <button class="btn btn-primary btn-sm" bindtap="applyBeauty">应用美颜</button>
     </view>
 
-    <!-- 水印（端内 canvas） -->
-    <view wx:elif="{{activeTab === 'watermark'}}" class="panel__col">
-      <input class="input" placeholder="输入水印文字（如：AI 证件照）" value="{{watermarkText}}" bindinput="onWatermarkInput" />
-      <button class="btn btn-primary btn-sm" bindtap="onWatermark">添加水印</button>
+    <!-- 修图（调整：亮度/对比度/饱和度/色温/锐度） -->
+    <view wx:elif="{{activeTab === 'adjust'}}" class="panel__sliders">
+      <view class="slider-row">
+        <text class="slider-row__label">亮度</text>
+        <slider min="-100" max="100" value="{{adjust.brightness}}" activeColor="#16A36E"
+          data-field="brightness" bindchanging="onAdjustChange" bindchange="onAdjustChange" />
+      </view>
+      <view class="slider-row">
+        <text class="slider-row__label">对比度</text>
+        <slider min="-100" max="100" value="{{adjust.contrast}}" activeColor="#16A36E"
+          data-field="contrast" bindchanging="onAdjustChange" bindchange="onAdjustChange" />
+      </view>
+      <view class="slider-row">
+        <text class="slider-row__label">饱和度</text>
+        <slider min="-100" max="100" value="{{adjust.saturation}}" activeColor="#16A36E"
+          data-field="saturation" bindchanging="onAdjustChange" bindchange="onAdjustChange" />
+      </view>
+      <view class="slider-row">
+        <text class="slider-row__label">色温</text>
+        <slider min="-100" max="100" value="{{adjust.temperature}}" activeColor="#16A36E"
+          data-field="temperature" bindchanging="onAdjustChange" bindchange="onAdjustChange" />
+      </view>
+      <view class="slider-row">
+        <text class="slider-row__label">锐度</text>
+        <slider min="0" max="100" value="{{adjust.sharpen}}" activeColor="#16A36E"
+          data-field="sharpen" bindchanging="onAdjustChange" bindchange="onAdjustChange" />
+      </view>
+      <button class="btn btn-primary btn-sm" bindtap="applyAdjust">应用修图</button>
+    </view>
+
+    <!-- 去水印（涂 mask → 云函数 inpaint） -->
+    <view wx:elif="{{activeTab === 'inpaint'}}" class="panel__col">
+      <text class="panel__hint">用手指在照片上涂抹需要消除的水印 / 瑕疵区域，再点「消除水印」。</text>
+      <view class="panel__row">
+        <button class="btn btn-ghost btn-sm" bindtap="clearMask">清除涂抹</button>
+        <button class="btn btn-primary btn-sm" bindtap="onInpaint">消除水印</button>
+      </view>
     </view>
 
     <!-- 排版 -->
@@ -59,7 +94,7 @@
 
     <!-- 抠图 -->
     <view wx:else class="panel__hint">
-      <text>已自动智能抠图，可到「换底」选择底色，或用「裁剪 / 水印」在本地完成调整</text>
+      <text>已自动智能抠图，可到「换底」选择底色，或用「裁剪 / 去水印」在本地完成调整</text>
     </view>
   </view>
 

@@ -41,8 +41,15 @@
 .actions .btn-ghost { flex: 0 0 auto; }
 .actions .btn-primary { flex: 1; }
 
-/* 离屏画布：移出可视区，仅用于裁剪/水印导出 */
+/* 离屏画布：移出可视区，仅用于裁剪导出 */
 .work-canvas { position: fixed; left: -9999rpx; top: -9999rpx; width: 600px; height: 600px; }
+
+/* 去水印涂抹画布：覆盖在预览图上，仅 inpaint 模式显示 */
+.mask-canvas {
+  position: absolute; top: var(--sp-6); left: 50%; transform: translateX(-50%);
+  width: 420rpx; height: 560rpx; border-radius: var(--r-md);
+  background: rgba(0,0,0,0.03); touch-action: none;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .stage__chip { animation: none; }

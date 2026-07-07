@@ -4,6 +4,7 @@ const { init, ok, fail, getOpenid, cloud } = require('./_shared/response');
 const { checkQuota, incQuota } = require('./_shared/quota');
 const { OPTIMIZE_SYSTEM } = require('./_shared/prompts');
 const { chat } = require('./_shared/hunyuan');
+const { msgSecCheck } = require('./_shared/security');
 
 function safeJson(text) {
   const m = text.match(/\{[\s\S]*\}/);
@@ -25,6 +26,12 @@ exports.main = async (event) => {
 
   const q = await checkQuota(openid, 'text');
   if (!q.ok) return fail(1002, '今日免费额度已用完', { used: q.used, limit: q.limit });
+
+  // 内容安全（JD 送审）
+  if (event.target) {
+    const sec = await msgSecCheck(event.target.slice(0, 2000));
+    if (!sec.pass) return fail(3001, 'JD 内容未通过安全审核');
+  }
 
   const user = [
     `优化范围：${event.scope || 'all'}`,

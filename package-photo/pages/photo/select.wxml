@@ -1,4 +1,20 @@
 <view class="page-container">
+  <view class="section-title">制作方式</view>
+  <view class="seg">
+    <view class="seg__item {{mode === 'normal' ? 'on' : ''}}" data-key="normal" bindtap="selectMode">普通证件照</view>
+    <view class="seg__item {{mode === 'ai' ? 'on' : ''}}" data-key="ai" bindtap="selectMode">AI 职业照</view>
+  </view>
+
+  <block wx:if="{{mode === 'ai'}}">
+    <view class="section-title">职业照风格</view>
+    <view class="presets">
+      <view wx:for="{{styles}}" wx:key="key"
+        class="chip {{style === item.key ? 'on' : ''}}" data-key="{{item.key}}" bindtap="selectStyle">
+        {{item.label}}
+      </view>
+    </view>
+  </block>
+
   <view class="section-title">选择照片来源</view>
   <view class="sources">
     <view wx:for="{{sources}}" wx:key="key" class="source card card-hover" data-key="{{item.key}}" bindtap="chooseSource">
@@ -17,5 +33,5 @@
     </view>
   </view>
 
-  <view class="tip">AI 能力基于微信云开发免费额度，生成即合规可用</view>
+  <view class="tip">{{mode === 'ai' ? 'AI 职业照基于混元生图（免费额度内），生成后可在编辑页进一步修图换底' : 'AI 能力基于微信云开发免费额度，生成即合规可用'}}</view>
 </view>

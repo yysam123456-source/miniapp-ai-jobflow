@@ -2,7 +2,7 @@
 // 换底(op=bg) / 美颜(op=beauty)。fileID 进出。消耗 image 额度。
 const { init, ok, fail, getOpenid, cloud } = require('./_shared/response');
 const { checkQuota, incQuota } = require('./_shared/quota');
-const { compositeBg, beauty } = require('./_shared/image');
+const { compositeBg, beauty, adjust } = require('./_shared/image');
 
 exports.main = async (event) => {
   init();
@@ -18,6 +18,12 @@ exports.main = async (event) => {
     let out;
     if (op === 'beauty') {
       const r = await beauty(dl.fileContent, { smooth: event.smooth, whiten: event.whiten });
+      out = r.buffer;
+    } else if (op === 'adjust') {
+      const r = await adjust(dl.fileContent, {
+        brightness: event.brightness, contrast: event.contrast,
+        saturation: event.saturation, temperature: event.temperature, sharpen: event.sharpen,
+      });
       out = r.buffer;
     } else {
       out = await compositeBg(dl.fileContent, event.bg || 'white');

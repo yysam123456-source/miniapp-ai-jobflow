@@ -15,11 +15,39 @@ Page({
     openid: '',
     loading: false,
     works: [],
+    continueWf: null,
   },
 
   onShow() {
     this.setData({ openid: getOpenid() || '未登录' });
     this.loadWorks();
+    this.loadWorkflow();
+  },
+
+  // F1 / F5：读取进行中的工作流，提供「继续制作」入口
+  loadWorkflow() {
+    const openid = getOpenid();
+    if (!openid) return;
+    call('workflowState', { action: 'get' }, { silent: true })
+      .then((res) => {
+        const cur = res && res.current;
+        if (cur && cur.photoAssetId) {
+          this.setData({ continueWf: cur });
+        } else {
+          this.setData({ continueWf: null });
+        }
+      })
+      .catch(() => {});
+  },
+
+  onContinue() {
+    const wf = this.data.continueWf;
+    if (!wf) return;
+    if (wf.photoAssetId) {
+      wx.navigateTo({ url: `/package-photo/pages/photo/edit?src=${encodeURIComponent(wf.photoAssetId)}&mode=normal` });
+    } else {
+      wx.navigateTo({ url: '/package-resume/pages/resume/import' });
+    }
   },
 
   loadWorks() {
@@ -43,11 +71,19 @@ Page({
   },
 
   goPhoto() {
-    wx.navigateTo({ url: '/package-photo/pages/photo/select' });
+    const wf = this.data.continueWf;
+    const url = wf && wf.photoAssetId
+      ? `/package-photo/pages/photo/edit?src=${encodeURIComponent(wf.photoAssetId)}&mode=normal`
+      : '/package-photo/pages/photo/select';
+    wx.navigateTo({ url });
   },
 
   goResume() {
-    wx.navigateTo({ url: '/package-resume/pages/resume/import' });
+    const wf = this.data.continueWf;
+    const url = wf && wf.photoAssetId
+      ? `/package-resume/pages/resume/import?photoAssetId=${wf.photoAssetId}`
+      : '/package-resume/pages/resume/import';
+    wx.navigateTo({ url });
   },
 
   // 微信分享（裂变）：好友 / 群

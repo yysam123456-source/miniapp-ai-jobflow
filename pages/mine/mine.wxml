@@ -10,6 +10,16 @@
     <view class="chip on">免费</view>
   </view>
 
+  <!-- 继续上次（F1 / F5 工作流续接） -->
+  <view wx:if="{{continueWf}}" class="continue card card-hover" bindtap="onContinue">
+    <view class="continue__icon">↻</view>
+    <view class="continue__body">
+      <view class="continue__title">继续上次的制作</view>
+      <view class="continue__sub">{{continueWf.photoAssetId ? '证件照已就绪，继续编辑或去做简历' : '继续你的简历制作'}}</view>
+    </view>
+    <view class="continue__arrow">›</view>
+  </view>
+
   <!-- 我的作品 -->
   <view class="section-title">我的作品</view>
   <view class="works">

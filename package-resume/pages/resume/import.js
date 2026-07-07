@@ -94,6 +94,12 @@ Page({
         const resumeData = res && res.resumeData;
         if (!resumeData) throw new Error('empty');
         setDraft({ resumeData, photoAssetId: that.data.photoAssetId });
+        // 写入工作流状态机（F1 / F5 续接）
+        call('workflowState', {
+          action: 'set',
+          step: 'import_resume',
+          photoAssetId: that.data.photoAssetId,
+        }, { silent: true }).catch(() => {});
         wx.showToast({ title: '解析成功', icon: 'success' });
         setTimeout(() => wx.navigateTo({ url: '/package-resume/pages/resume/template' }), 600);
       })

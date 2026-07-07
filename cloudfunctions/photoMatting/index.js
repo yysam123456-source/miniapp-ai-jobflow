@@ -3,6 +3,7 @@
 const { init, ok, fail, getOpenid, cloud } = require('./_shared/response');
 const { checkQuota, incQuota } = require('./_shared/quota');
 const { matting } = require('./_shared/image');
+const { imgSecCheck } = require('./_shared/security');
 
 exports.main = async (event) => {
   init();
@@ -14,6 +15,9 @@ exports.main = async (event) => {
 
   try {
     const dl = await cloud.downloadFile({ fileID: event.fileID });
+    // 内容安全（图片送审）
+    const sec = await imgSecCheck(event.fileID);
+    if (!sec.pass) return fail(3001, '照片未通过内容安全审核');
     const out = await matting(dl.fileContent);
     const up = await cloud.uploadFile({
       cloudPath: `photo/matted/${Date.now()}_${Math.random().toString(36).slice(2)}.png`,

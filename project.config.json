@@ -16,5 +16,16 @@
   },
   "compileType": "miniprogram",
   "libVersion": "latest",
+  "packOptions": {
+    "ignore": [
+      { "type": "folder", "value": "deliverables" },
+      { "type": "folder", "value": "refs" },
+      { "type": "folder", "value": "cloudfunctions" },
+      { "type": "folder", "value": ".workbuddy" },
+      { "type": "file", "value": "README.md" },
+      { "type": "file", "value": "config.example.js" },
+      { "type": "file", "value": "deploy.sh" }
+    ]
+  },
   "condition": {}
 }

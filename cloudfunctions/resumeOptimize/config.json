@@ -1,4 +1,7 @@
 {
   "timeout": 30,
-  "runtime": "Nodejs18.15"
+  "runtime": "Nodejs18.15",
+  "permissions": {
+    "openapi": ["security.msgSecCheck"]
+  }
 }

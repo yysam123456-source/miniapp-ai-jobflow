@@ -1,6 +1,4 @@
 {
-  "timeout": 30,
-  "runtime": "Nodejs18.15",
   "permissions": {
     "openapi": ["security.imgSecCheck"]
   }

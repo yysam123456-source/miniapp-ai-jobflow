@@ -1,0 +1,9 @@
+{
+  "name": "photoGenerate",
+  "version": "1.0.0",
+  "description": "F2a/F2b AI 职业照生成（混元文本+生图）",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

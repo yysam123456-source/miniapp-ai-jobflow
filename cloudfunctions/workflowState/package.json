@@ -1,0 +1,9 @@
+{
+  "name": "workflowState",
+  "version": "1.0.0",
+  "description": "F1 工作流状态机持久化 / F5 双入口续接",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

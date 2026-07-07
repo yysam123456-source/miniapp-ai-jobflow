@@ -7,15 +7,23 @@ Page({
     preview: '',
     size: '1inch',
     bg: 'white',
+    // 5 色底色（对齐 PRD / 契约 BG_MAP：white/blue/red/lightblue/lightgray）
     bgs: [
       { key: 'white', label: '白底' },
       { key: 'blue', label: '蓝底' },
       { key: 'red', label: '红底' },
+      { key: 'lightblue', label: '浅蓝' },
+      { key: 'lightgray', label: '浅灰' },
     ],
+    // 7 规格（对齐 PRD F4a / SIZE_MAP：一寸/二寸/小一寸/护照/美签/英签/申根）
     sizes: [
       { id: '1inch', label: '一寸 295×413' },
       { id: '2inch', label: '二寸 413×579' },
       { id: 'small', label: '小一寸 260×378' },
+      { id: 'passport', label: '护照 354×472' },
+      { id: 'us_visa', label: '美签 600×600' },
+      { id: 'uk_visa', label: '英签 350×450' },
+      { id: 'schengen', label: '申根 354×472' },
     ],
     exporting: false,
   },

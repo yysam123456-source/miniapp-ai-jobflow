@@ -5,6 +5,7 @@ const { checkQuota, incQuota } = require('./_shared/quota');
 const { parse } = require('./_shared/parseResume');
 const { PARSE_SYSTEM } = require('./_shared/prompts');
 const { chat } = require('./_shared/hunyuan');
+const { msgSecCheck } = require('./_shared/security');
 
 async function extractText(fileType, buffer) {
   if (fileType === 'text') return buffer.toString('utf8');
@@ -48,6 +49,10 @@ exports.main = async (event) => {
   try {
     const dl = await cloud.downloadFile({ fileID: event.fileId });
     const rawText = await extractText(fileType, dl.fileContent);
+
+    // 内容安全（文本送审，截断到接口上限）
+    const sec = await msgSecCheck(rawText.slice(0, 2000));
+    if (!sec.pass) return fail(3001, '简历内容未通过安全审核');
 
     let resumeData, confidence = 0.6, warnings = [];
     if (useAI) {

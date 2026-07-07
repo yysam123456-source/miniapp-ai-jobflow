@@ -11,6 +11,24 @@
 .profile__name { font-size: var(--fs-h2); font-weight: var(--fw-bold); color: var(--c-ink); }
 .profile__sub { font-size: var(--fs-mini); color: var(--c-ink-3); margin-top: 4rpx; }
 
+/* F1 / F5 工作流续接横幅 */
+.continue {
+  display: flex; align-items: center; gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+  background: var(--grad-brand);
+  border: none;
+}
+.continue__icon {
+  width: 72rpx; height: 72rpx; border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.18); color: #fff;
+  font-size: 40rpx; font-weight: var(--fw-bold);
+}
+.continue__body { flex: 1; }
+.continue__title { font-size: var(--fs-body); font-weight: var(--fw-semi); color: #fff; }
+.continue__sub { font-size: var(--fs-mini); color: rgba(255,255,255,0.82); margin-top: 4rpx; }
+.continue__arrow { font-size: 44rpx; color: rgba(255,255,255,0.9); }
+
 .works { display: flex; flex-direction: column; gap: var(--sp-3); }
 .work { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3); }
 .work__icon {
