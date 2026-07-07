@@ -1,0 +1,139 @@
+/* =====================================================================
+ * AI 求职一站式 · 设计令牌 (Design Tokens)
+ * 文件：variables.wxss
+ * 用途：在 app.wxss 顶部 @import 本文件，全小程序即可使用 var(--xxx)
+ * 说明：颜色保持 hex；尺寸按 750rpx = 375pt 设计宽度，1px(CSS) ≈ 2rpx
+ * ===================================================================== */
+
+/* ---- 颜色令牌 ---- */
+page {
+  /* 品牌主色（证件照 / 主操作） */
+  --c-brand: #16A36E;
+  --c-brand-700: #0F7E53;
+  --c-brand-600: #12A06A;
+  --c-brand-50: #E8F6EF;
+  --c-brand-100: #D2EFE2;
+
+  /* 辅色（AI / 简历） */
+  --c-accent: #6C5CE7;
+  --c-accent-700: #574BC2;
+  --c-accent-50: #EFEDFD;
+  --c-accent-100: #E0DCFB;
+
+  /* 中性色 */
+  --c-page: #F5F6F8;
+  --c-card: #FFFFFF;
+  --c-surface: #F1F3F5;
+  --c-surface-2: #EDEFF2;
+
+  /* 文字 */
+  --c-ink: #15181C;
+  --c-ink-2: #5B6470;
+  --c-ink-3: #9AA3AF;
+
+  /* 边框 / 分割 */
+  --c-border: #E6E9ED;
+  --c-divider: #F0F1F3;
+
+  /* 语义色 */
+  --c-success: #16A36E;
+  --c-warning: #F5A623;
+  --c-danger: #E5484D;
+  --c-info: #2D8CFF;
+
+  /* 渐变 */
+  --grad-brand: linear-gradient(135deg, #21C28C 0%, #0F8C5E 100%);
+  --grad-accent: linear-gradient(135deg, #8B7BF2 0%, #5B49D8 100%);
+  --grad-hero: linear-gradient(135deg, #0F8C5E 0%, #16A36E 45%, #6C5CE7 120%);
+
+  /* ---- 字体令牌（rpx） ---- */
+  --font-stack: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --fs-display: 52rpx;   /* 26px 页面大标题 / Hero */
+  --fs-h1: 36rpx;        /* 18px 导航栏标题 */
+  --fs-h2: 32rpx;        /* 16px 卡片 / 区块标题 */
+  --fs-body: 28rpx;      /* 14px 正文 / 列表 */
+  --fs-caption: 24rpx;   /* 12px 辅助文字 */
+  --fs-data: 40rpx;      /* 20px 分数 / 指标 */
+  --fs-mini: 22rpx;      /* 11px 微标 */
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semi: 600;
+  --fw-bold: 700;
+
+  --lh-tight: 1.2;
+  --lh-snug: 1.4;
+  --lh-base: 1.5;
+  --lh-loose: 1.6;
+
+  /* ---- 间距令牌（rpx，4px=8rpx 基准） ---- */
+  --sp-1: 8rpx;    /* 4px */
+  --sp-2: 16rpx;   /* 8px */
+  --sp-3: 24rpx;   /* 12px */
+  --sp-4: 32rpx;   /* 16px */
+  --sp-5: 40rpx;   /* 20px */
+  --sp-6: 48rpx;   /* 24px */
+  --sp-8: 64rpx;   /* 32px */
+  --sp-12: 96rpx;  /* 48px */
+  --sp-16: 128rpx; /* 64px */
+
+  /* 常用组合 */
+  --page-px: 32rpx;    /* 页面左右 padding */
+  --card-px: 32rpx;    /* 卡片内 padding */
+  --gap: 24rpx;        /* 组件间 gap */
+  --section-gap: 40rpx;/* 区块间距 */
+
+  /* ---- 圆角令牌（rpx） ---- */
+  --r-sm: 16rpx;   /* 8px 输入 */
+  --r-md: 24rpx;   /* 12px 按钮/卡片 */
+  --r-lg: 32rpx;   /* 16px 大卡 */
+  --r-xl: 40rpx;   /* 20px */
+  --r-pill: 999rpx;/* 胶囊 */
+
+  /* ---- 阴影令牌 ---- */
+  --sh-1: 0 2rpx 4rpx rgba(20, 24, 31, 0.06);
+  --sh-2: 0 8rpx 28rpx rgba(20, 24, 31, 0.08);
+  --sh-3: 0 20rpx 60rpx rgba(20, 24, 31, 0.12);
+  --sh-brand: 0 16rpx 40rpx rgba(22, 163, 110, 0.28);
+
+  /* ---- 尺寸令牌（rpx） ---- */
+  --btn-h: 96rpx;     /* 48px 按钮高度 */
+  --btn-h-sm: 76rpx;  /* 38px 小按钮 */
+  --input-h: 92rpx;   /* 46px 输入高度 */
+  --tabbar-h: 110rpx; /* 底部 TabBar 高度 */
+  --touch-min: 88rpx; /* 最小触控目标 44px */
+
+  /* ---- 动效令牌 ---- */
+  --dur-page: 300ms;
+  --dur-sheet: 280ms;
+  --dur-press: 120ms;
+  --dur-tab: 150ms;
+  --dur-count: 600ms;
+  --dur-ring: 800ms;
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ---- 层级令牌 ---- */
+  --z-nav: 100;
+  --z-sheet: 900;
+  --z-mask: 800;
+  --z-toast: 1000;
+  --z-tabbar: 100;
+}
+
+/* ---- 暗色主题（P2，按需在 page 容器加 class 切换） ----
+.page-dark {
+  --c-page: #121417;
+  --c-card: #1C1F24;
+  --c-surface: #23272E;
+  --c-surface-2: #2C313A;
+  --c-ink: #F2F4F7;
+  --c-ink-2: #B4BBC4;
+  --c-ink-3: #7E8693;
+  --c-border: #2C313A;
+  --c-divider: #23272E;
+  --sh-1: 0 2rpx 4rpx rgba(0,0,0,0.4);
+  --sh-2: 0 8rpx 28rpx rgba(0,0,0,0.45);
+  --sh-3: 0 20rpx 60rpx rgba(0,0,0,0.55);
+}
+*/

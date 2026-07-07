@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 求职一站式 · UI 设计方案 v2.1（精修版）</title>
+<style>
+  :root{
+    --brand:#16A36E; --brand-700:#0F7E53; --brand-600:#12A06A;
+    --brand-50:#E8F6EF; --brand-100:#D2EFE2;
+    --accent:#6C5CE7; --accent-700:#574BC2; --accent-50:#EFEDFD; --accent-100:#E0DCFB;
+    --page:#F5F6F8; --card:#FFFFFF; --surface:#F1F3F5; --surface-2:#EDEFF2;
+    --ink:#15181C; --ink-2:#5B6470; --ink-3:#9AA3AF; --border:#E6E9ED; --divider:#F0F1F3;
+    --success:#16A36E; --warning:#F5A623; --danger:#E5484D; --info:#2D8CFF;
+    --grad-brand:linear-gradient(135deg,#21C28C 0%,#0F8C5E 100%);
+    --grad-accent:linear-gradient(135deg,#8B7BF2 0%,#5B49D8 100%);
+    --grad-hero:linear-gradient(135deg,#0F8C5E 0%,#16A36E 45%,#6C5CE7 120%);
+    --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:20px; --r-pill:999px;
+    --sh-1:0 1px 2px rgba(20,24,31,.06); --sh-2:0 4px 14px rgba(20,24,31,.08);
+    --sh-3:0 10px 30px rgba(20,24,31,.12); --sh-brand:0 8px 20px rgba(22,163,110,.28);
+    --font:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    --ease-out:cubic-bezier(.22,.61,.36,1);
+    --ease-in-out:cubic-bezier(.65,0,.35,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font);background:
+      radial-gradient(1200px 600px at 100% -10%,rgba(108,92,231,.06),transparent),
+      radial-gradient(1000px 500px at -10% 0%,rgba(22,163,110,.07),transparent),var(--page);
+    color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6}
+  a{color:inherit;text-decoration:none}
+
+  .topnav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(12px);
+    background:rgba(255,255,255,.82);border-bottom:1px solid var(--border)}
+  .topnav-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:14px 24px}
+  .brandmark{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+  .brandmark .logo{width:30px;height:30px;border-radius:9px;background:var(--grad-brand);display:grid;place-items:center;color:#fff;font-size:16px;box-shadow:var(--sh-brand)}
+  .topnav nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .topnav nav a{font-size:13px;color:var(--ink-2);padding:7px 12px;border-radius:8px}
+  .topnav nav a:hover{background:var(--surface);color:var(--ink)}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  section{padding:64px 0;border-bottom:1px solid var(--divider)}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--brand-700);background:var(--brand-50);padding:6px 12px;border-radius:var(--r-pill);text-transform:uppercase}
+  .eyebrow.purple{color:var(--accent-700);background:var(--accent-50)}
+  h2.title{font-size:30px;line-height:1.25;margin:16px 0 10px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--ink-2);max-width:780px}
+
+  /* Hero */
+  .hero{padding:72px 0 56px}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  .hero h1{font-size:46px;line-height:1.12;letter-spacing:-.02em;margin:18px 0 18px}
+  .hero h1 .grad{background:var(--grad-hero);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{font-size:16px;color:var(--ink-2);max-width:520px}
+  .hero-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+  .tag{font-size:12.5px;font-weight:600;color:var(--ink-2);background:#fff;border:1px solid var(--border);padding:8px 13px;border-radius:var(--r-pill);box-shadow:var(--sh-1)}
+  .hero-meta{display:flex;gap:26px;margin-top:30px;flex-wrap:wrap}
+  .hero-meta div span{display:block;font-size:12px;color:var(--ink-3)}
+  .hero-meta div b{font-size:20px;font-weight:700}
+  .hero-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);box-shadow:var(--sh-3);padding:22px;position:relative;overflow:hidden}
+  .hero-card::before{content:"";position:absolute;inset:0;background:var(--grad-hero);opacity:.04}
+  .hero-card .row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--divider)}
+  .hero-card .row:last-child{border-bottom:0}
+  .hero-card .ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:18px;flex:0 0 auto}
+  .hero-card b{font-size:14px}.hero-card small{display:block;color:var(--ink-3);font-size:12px}
+  .version-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#fff;background:var(--grad-accent);padding:6px 13px;border-radius:var(--r-pill);box-shadow:var(--sh-2)}
+
+  /* 设计理念 */
+  .principles{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:28px}
+  .principle{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:22px;box-shadow:var(--sh-1);transition:.25s}
+  .principle:hover{transform:translateY(-4px);box-shadow:var(--sh-2)}
+  .principle .num{font-size:13px;font-weight:700;color:var(--brand)}
+  .principle h4{font-size:16px;margin:8px 0 6px}
+  .principle p{font-size:13px;color:var(--ink-2)}
+
+  /* 设计系统 复用 */
+  .color-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:26px}
+  .color-group h4{font-size:14px;margin-bottom:12px;color:var(--ink-2)}
+  .color-line{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:13px}
+  .color-line .dot{width:22px;height:22px;border-radius:6px;flex:0 0 auto;border:1px solid rgba(0,0,0,.06)}
+  .color-line code{margin-left:auto;color:var(--ink-3);font-size:12px;background:var(--surface);padding:2px 7px;border-radius:6px}
+  .swatches{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:26px}
+  .sw{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--sh-1)}
+  .sw .chip{height:74px}.sw .meta{padding:10px 12px}.sw .meta b{font-size:12.5px}.sw .meta small{display:block;color:var(--ink-3);font-size:11px;margin-top:2px}
+  .type-scale{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 40px;margin-top:26px}
+  .type-row{display:flex;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid var(--divider)}
+  .type-row .spec{width:120px;flex:0 0 auto;color:var(--ink-3);font-size:12px}
+  .type-row .sample{flex:1}.type-row .sample b{display:block;color:var(--ink-3);font-size:11px;font-weight:500;margin-top:4px}
+  .tokens{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:26px}
+  .token-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;box-shadow:var(--sh-1)}
+  .token-card h4{font-size:14px;margin-bottom:14px}
+  .sp-boxes{display:flex;align-items:flex-end;gap:10px}
+  .sp{background:var(--brand-50);border:1px solid var(--brand-100);border-radius:6px;display:grid;place-items:center;font-size:10px;color:var(--brand-700)}
+  .radius-demo{display:flex;gap:14px;align-items:flex-end}
+  .radius-demo .r{background:var(--surface);border:1px solid var(--border);height:54px;width:54px;display:grid;place-items:center;font-size:10px;color:var(--ink-3)}
+  .shadow-demo{display:flex;gap:18px;align-items:center}
+  .shadow-demo .s{background:#fff;border:1px solid var(--border);height:56px;width:84px;border-radius:10px;display:grid;place-items:center;font-size:11px;color:var(--ink-3)}
+  .rpx-note{margin-top:18px;background:var(--accent-50);border:1px solid var(--accent-100);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--accent-700)}
+  .rpx-note b{font-weight:700}
+
+  /* 组件库 */
+  .comp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:26px}
+  .comp-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:22px;box-shadow:var(--sh-1)}
+  .comp-card h4{font-size:13px;color:var(--ink-2);margin-bottom:16px;font-weight:600}
+  .comp-card .stage{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .btn{font-family:var(--font);font-size:14px;font-weight:600;border:0;cursor:pointer;border-radius:14px;padding:0 20px;height:46px;display:inline-flex;align-items:center;gap:8px;transition:.2s}
+  .btn-primary{background:var(--grad-brand);color:#fff;box-shadow:var(--sh-brand)}
+  .btn-primary:active{transform:scale(.98)}
+  .btn-accent{background:var(--grad-accent);color:#fff}
+  .btn-ghost{background:#fff;color:var(--ink);border:1px solid var(--border)}
+  .btn-soft{background:var(--brand-50);color:var(--brand-700)}
+  .btn-sm{height:38px;font-size:13px;padding:0 15px;border-radius:11px}
+  .btn-block{width:100%;justify-content:center}
+  .input{font-family:var(--font);font-size:14px;height:46px;border:1px solid var(--border);border-radius:12px;padding:0 14px;background:#fff;color:var(--ink);width:240px;outline:none}
+  .input:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-50)}
+  .chip{font-size:13px;font-weight:600;padding:8px 15px;border-radius:var(--r-pill);background:var(--surface);color:var(--ink-2);border:1px solid transparent}
+  .chip.on{background:var(--brand-50);color:var(--brand-700);border-color:var(--brand-100)}
+  .chip.accent.on{background:var(--accent-50);color:var(--accent-700);border-color:var(--accent-100)}
+  .seg{display:inline-flex;background:var(--surface);border-radius:12px;padding:4px}
+  .seg button{font-family:var(--font);border:0;background:transparent;font-size:13px;font-weight:600;color:var(--ink-2);padding:8px 16px;border-radius:9px;cursor:pointer}
+  .seg button.on{background:#fff;color:var(--brand-700);box-shadow:var(--sh-1)}
+  .slider{height:6px;border-radius:99px;background:var(--surface-2);position:relative;width:240px}
+  .slider .fill{position:absolute;left:0;top:0;bottom:0;width:62%;background:var(--grad-brand);border-radius:99px}
+  .slider .knob{position:absolute;left:62%;top:50%;transform:translate(-50%,-50%);width:18px;height:18px;background:#fff;border-radius:50%;box-shadow:var(--sh-2);border:2px solid var(--brand)}
+  .slider-val{font-size:12px;color:var(--ink-3);margin-top:6px}
+  .progress{width:240px;height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+  .progress .bar{height:100%;width:70%;background:var(--grad-brand);border-radius:99px}
+  .toggle{width:50px;height:30px;border-radius:99px;background:var(--brand);position:relative}
+  .toggle::after{content:"";position:absolute;right:3px;top:3px;width:24px;height:24px;background:#fff;border-radius:50%;box-shadow:var(--sh-1);transition:.25s var(--ease-out)}
+  .toggle.off{background:var(--surface-2)}.toggle.off::after{right:23px}
+  .toast{display:inline-flex;align-items:center;gap:9px;background:rgba(21,24,28,.92);color:#fff;font-size:13px;padding:11px 16px;border-radius:12px}
+  .toast .ic{width:18px;height:18px;border-radius:50%;background:var(--danger);display:grid;place-items:center;font-size:11px}
+  .skeleton{width:240px;height:60px;border-radius:12px;background:linear-gradient(90deg,var(--surface) 25%,var(--surface-2) 50%,var(--surface) 75%);background-size:200% 100%;animation:sh 1.3s infinite}
+  @keyframes sh{to{background-position:-200% 0}}
+  .empty{width:240px;border:1px dashed var(--border);border-radius:14px;padding:22px;text-align:center;color:var(--ink-3);font-size:12px;background:var(--surface)}
+
+  /* ===== 手机 Mockup ===== */
+  .screens{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 26px;margin-top:34px}
+  .screen-col{display:flex;flex-direction:column;align-items:center}
+  .screen-col .cap{text-align:center;max-width:300px;margin-top:14px}
+  .screen-col .cap b{font-size:14px}
+  .screen-col .cap small{display:block;color:var(--ink-3);font-size:12px;margin-top:3px;line-height:1.5}
+  .ix{margin-top:12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;width:300px;text-align:left}
+  .ix .ixh{font-size:11.5px;font-weight:700;color:var(--brand-700);margin-bottom:7px;display:flex;align-items:center;gap:6px}
+  .ix ul{list-style:none}.ix li{font-size:11.5px;color:var(--ink-2);padding:3px 0 3px 15px;position:relative;line-height:1.5}
+  .ix li::before{content:"›";position:absolute;left:1px;color:var(--brand);font-weight:700}
+  .ix li b{color:var(--ink)}
+  .phone{width:300px;flex:0 0 auto;background:#0E1116;border-radius:42px;padding:10px;box-shadow:var(--sh-3);position:relative}
+  .phone::before{content:"";position:absolute;top:16px;left:50%;transform:translateX(-50%);width:120px;height:24px;background:#0E1116;border-radius:0 0 16px 16px;z-index:5}
+  .screen{width:100%;height:648px;background:var(--page);border-radius:32px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+  .statusbar{display:flex;align-items:center;justify-content:space-between;padding:10px 20px 4px;font-size:12px;font-weight:600;color:var(--ink)}
+  .statusbar .dots{display:flex;gap:4px;align-items:center}
+  .statusbar .dots i{width:6px;height:6px;border-radius:50%;background:var(--ink);display:inline-block;opacity:.55}
+  .scr-body{flex:1;overflow:hidden;display:flex;flex-direction:column}
+
+  .nav-bar{display:flex;align-items:center;gap:10px;padding:8px 16px 10px}
+  .nav-bar .back{width:30px;height:30px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:var(--sh-1);font-size:15px}
+  .nav-bar .ttl{font-size:16px;font-weight:600}
+  .nav-bar .sub{font-size:12px;color:var(--ink-3);margin-left:auto}
+
+  /* 首页 */
+  .home-hero{background:var(--grad-hero);padding:24px 20px 28px;color:#fff;position:relative;overflow:hidden}
+  .home-hero::after{content:"";position:absolute;right:-40px;top:-40px;width:170px;height:170px;background:rgba(255,255,255,.12);border-radius:50%}
+  .home-hero::before{content:"";position:absolute;left:-30px;bottom:-50px;width:140px;height:140px;background:rgba(255,255,255,.08);border-radius:50%}
+  .home-hero .kicker{font-size:12px;opacity:.92;display:flex;align-items:center;gap:6px}
+  .home-hero .kicker .free{background:rgba(255,255,255,.2);padding:2px 8px;border-radius:99px;font-weight:600}
+  .home-hero h3{font-size:23px;font-weight:700;margin-top:6px;line-height:1.25}
+  .home-hero p{font-size:12.5px;opacity:.92;margin-top:8px}
+  .entry-card{margin:16px;background:#fff;border-radius:var(--r-lg);padding:16px;display:flex;gap:14px;align-items:center;box-shadow:var(--sh-1);border:1px solid var(--border);position:relative;overflow:hidden}
+  .entry-card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--brand)}
+  .entry-card.purple::after{background:var(--accent)}
+  .entry-card .eic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:22px;flex:0 0 auto;background:var(--brand-50)}
+  .entry-card.purple .eic{background:var(--accent-50)}
+  .entry-card b{font-size:15px}.entry-card small{display:block;color:var(--ink-3);font-size:11.5px;margin-top:2px}
+  .entry-card .arrow{margin-left:auto;color:var(--ink-3);font-size:18px}
+  .free-strip{margin:0 16px 16px;background:var(--brand-50);border:1px solid var(--brand-100);border-radius:14px;padding:14px;display:flex;justify-content:space-around;text-align:center}
+  .free-strip div b{font-size:17px;color:var(--brand-700);display:block}.free-strip div small{font-size:11px;color:var(--ink-2)}
+  .tabbar{display:flex;background:#fff;border-top:1px solid var(--border);padding:8px 0 10px;margin-top:auto}
+  .tabbar .tb{flex:1;text-align:center;font-size:10.5px;color:var(--ink-3);display:flex;flex-direction:column;align-items:center;gap:3px}
+  .tabbar .tb .ti{font-size:18px}.tabbar .tb.on{color:var(--brand-700)}.tabbar .tb.on .ti{filter:drop-shadow(0 2px 4px rgba(22,163,110,.4))}
+
+  /* 证件照编辑 */
+  .photo-preview{flex:1;background:linear-gradient(160deg,#ECEFF3,#E3E8EE);display:grid;place-items:center;position:relative;min-height:200px}
+  .photo-preview .figure{width:120px;height:150px;border-radius:14px;background:linear-gradient(180deg,#CFD8E3,#AEB9C7);position:relative;box-shadow:var(--sh-2)}
+  .photo-preview .figure::before{content:"";position:absolute;top:22px;left:50%;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;background:#8893A3}
+  .photo-preview .figure::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:90px;height:80px;border-radius:60px 60px 0 0;background:#9AA6B5}
+  .photo-preview .ai-chip{position:absolute;top:10px;left:10px;background:rgba(108,92,231,.92);color:#fff;font-size:10.5px;font-weight:600;padding:5px 10px;border-radius:99px;display:flex;align-items:center;gap:5px}
+  .photo-preview .dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+  .photo-preview .dots i{width:6px;height:6px;border-radius:50%;background:var(--ink-3);opacity:.5}
+  .photo-preview .dots i.on{background:var(--brand);opacity:1;width:16px;border-radius:99px}
+  .tool-tabs{display:flex;gap:8px;padding:12px 14px;overflow:hidden}
+  .tool-tabs .tt{flex:0 0 auto;font-size:12px;font-weight:600;padding:8px 12px;border-radius:99px;background:var(--surface);color:var(--ink-2)}
+  .tool-tabs .tt.on{background:var(--brand-50);color:var(--brand-700)}
+  .param-panel{background:#fff;border-top:1px solid var(--divider);padding:14px 16px;border-radius:18px 18px 0 0;box-shadow:0 -4px 14px rgba(0,0,0,.04)}
+  .param-panel .lbl{font-size:12px;color:var(--ink-2);margin-bottom:10px;font-weight:600;display:flex;justify-content:space-between}
+  .param-panel .lbl .v{color:var(--brand-700)}
+  .bg-colors{display:flex;gap:12px}
+  .bg-colors .c{width:34px;height:34px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--border);position:relative}
+  .bg-colors .c.on{box-shadow:0 0 0 2px var(--brand)}
+  .bg-colors .c.on::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700}
+  .action-bar{display:flex;gap:10px;padding:12px 16px;background:#fff;border-top:1px solid var(--border)}
+  .action-bar .btn{flex:1;justify-content:center}
+
+  /* 合规检测 */
+  .detect-banner{margin:14px 16px;background:var(--brand-50);border:1px solid var(--brand-100);border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px}
+  .detect-banner .big{width:54px;height:54px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:28px;color:var(--brand);box-shadow:var(--sh-1)}
+  .detect-banner b{font-size:18px}.detect-banner small{display:block;color:var(--ink-2);font-size:12px}
+  .detect-list{margin:0 16px;display:flex;flex-direction:column;gap:10px}
+  .detect-item{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px}
+  .detect-item .ring{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;flex:0 0 auto;color:#fff}
+  .detect-item .nm{flex:1}.detect-item .nm b{font-size:13.5px}.detect-item .nm small{display:block;color:var(--ink-3);font-size:11px;margin-top:1px}
+  .detect-item .pf{font-size:12px;font-weight:700}.detect-item .pf.ok{color:var(--brand-700)}.detect-item .pf.no{color:var(--danger)}
+  .detect-item.fail{border-color:#F6C9CA}
+
+  /* 简历导入 */
+  .upload-box{margin:16px;border:2px dashed var(--brand-100);background:var(--brand-50);border-radius:16px;padding:26px;text-align:center;transition:.2s}
+  .upload-box:active{background:var(--brand-100)}
+  .upload-box .uic{width:50px;height:50px;border-radius:14px;background:#fff;display:grid;place-items:center;font-size:24px;margin:0 auto 10px;box-shadow:var(--sh-1)}
+  .upload-box b{font-size:14px}.upload-box small{display:block;color:var(--ink-3);font-size:11.5px;margin-top:4px}
+  .fmt-chips{display:flex;gap:8px;justify-content:center;margin:14px 16px 0}
+  .paste-box{margin:14px 16px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px;font-size:12px;color:var(--ink-2);min-height:64px}
+  .ai-progress{margin:14px 16px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px}
+  .ai-progress .ai-bar{height:7px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin-top:10px}
+  .ai-progress .ai-bar i{display:block;height:100%;width:65%;background:var(--grad-accent);border-radius:99px}
+
+  /* 模板选择 */
+  .tpl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:16px}
+  .tpl{background:#fff;border:2px solid var(--border);border-radius:12px;overflow:hidden;position:relative;transition:.2s}
+  .tpl:active{transform:scale(.97)}
+  .tpl.on{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-50)}
+  .tpl .thumb{height:96px;background:linear-gradient(160deg,#F7F8FA,#EDF1F5);padding:10px;display:flex;flex-direction:column;gap:4px}
+  .tpl .thumb .ln{height:5px;border-radius:3px;background:#D9E0E8}
+  .tpl .thumb .ln.w70{width:70%}.tpl .thumb .ln.w50{width:50%}.tpl .thumb .ln.w90{width:90%}
+  .tpl .thumb .blk{margin-top:auto;height:26px;border-radius:5px;background:#fff;border:1px solid var(--border)}
+  .tpl .nm{padding:9px 10px;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:space-between}
+  .tpl .nm .chk{width:16px;height:16px;border-radius:50%;background:var(--brand);color:#fff;font-size:10px;display:grid;place-items:center}
+  .tpl.more .thumb{background:repeating-linear-gradient(45deg,#F1F3F5,#F1F3F5 8px,#E9EDF1 8px,#E9EDF1 16px);align-items:center;justify-content:center}
+  .tpl.more .thumb span{font-size:22px;color:var(--ink-3)}
+
+  /* 简历编辑器 */
+  .resume-mini{margin:14px;background:#fff;border-radius:10px;padding:14px;box-shadow:var(--sh-1);transform:scale(.96);transform-origin:top center}
+  .resume-mini .rh{display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--brand);padding-bottom:8px;margin-bottom:8px}
+  .resume-mini .rh .av{width:34px;height:34px;border-radius:8px;background:var(--brand-50)}
+  .resume-mini .rh b{font-size:13px}.resume-mini .rh small{display:block;color:var(--ink-3);font-size:10px}
+  .resume-mini .rblk{font-size:10.5px;color:var(--ink-2);padding:6px 0;border-bottom:1px dashed var(--divider)}
+  .resume-mini .rblk.sel{outline:2px solid var(--info);border-radius:5px;background:#F0F6FF}
+  .resume-mini .rblk .hl{height:5px;width:40%;background:var(--brand-100);border-radius:3px;margin-bottom:4px}
+  .sheet{background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -6px 20px rgba(0,0,0,.08);padding:16px}
+  .sheet .grab{width:36px;height:4px;border-radius:99px;background:var(--surface-2);margin:0 auto 12px}
+  .sheet .sl-row{display:flex;align-items:center;gap:10px;margin:10px 0;font-size:12px;color:var(--ink-2)}
+  .sheet .sl-row .track{flex:1;height:5px;border-radius:99px;background:var(--surface-2);position:relative}
+  .sheet .sl-row .track i{position:absolute;left:40%;top:50%;transform:translateY(-50%);width:15px;height:15px;background:#fff;border:2px solid var(--brand);border-radius:50%;box-shadow:var(--sh-1)}
+  .sheet .sl-row .v{width:40px;text-align:right;color:var(--ink);font-weight:600}
+  .sheet .seg{width:100%;margin-top:6px}
+
+  /* AI 润色 */
+  .cmp{padding:14px 16px}
+  .cmp .blk{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:12px}
+  .cmp .blk .tag{font-size:10.5px;font-weight:700;letter-spacing:.06em}
+  .cmp .blk .tag.o{color:var(--ink-3)}.cmp .blk .tag.n{color:var(--brand-700)}
+  .cmp .blk .txt{font-size:13px;margin-top:6px}
+  .cmp .blk .txt.del{color:var(--ink-3);text-decoration:line-through}
+  .cmp .blk .txt.add{color:var(--brand-700)}
+  .cmp .sugg{font-size:11.5px;color:var(--accent-700);background:var(--accent-50);border-radius:9px;padding:8px 10px;margin-bottom:12px;display:flex;gap:6px;align-items:flex-start}
+
+  /* 导出分享 */
+  .spec-sel{margin:14px 16px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;font-size:13px}
+  .spec-sel .v{color:var(--brand-700);font-weight:600}
+  .receipt-row{margin:12px 16px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;font-size:13px}
+  .share-card{margin:14px 16px;border-radius:14px;overflow:hidden;background:var(--grad-hero);color:#fff;padding:16px;position:relative;box-shadow:var(--sh-2)}
+  .share-card .sc-ttl{font-size:14px;font-weight:700}.share-card .sc-sub{font-size:11px;opacity:.9;margin-top:2px}
+  .share-card .sc-qr{position:absolute;right:14px;bottom:14px;width:42px;height:42px;border-radius:8px;background:rgba(255,255,255,.9);display:grid;place-items:center;color:var(--ink);font-size:10px;font-weight:700}
+  .share-card .sc-ph{width:40px;height:50px;border-radius:6px;background:rgba(255,255,255,.85);margin-top:14px}
+
+  /* 我的 */
+  .me-head{background:var(--grad-brand);padding:22px 18px;color:#fff;display:flex;align-items:center;gap:14px}
+  .me-head .av{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.25);display:grid;place-items:center;font-size:22px}
+  .me-head b{font-size:16px}.me-head small{display:block;opacity:.9;font-size:12px}
+  .me-stats{display:flex;background:#fff;border-bottom:1px solid var(--border)}
+  .me-stats div{flex:1;text-align:center;padding:14px 0;border-right:1px solid var(--divider)}
+  .me-stats div:last-child{border-right:0}
+  .me-stats b{font-size:16px;display:block}.me-stats small{font-size:11px;color:var(--ink-3)}
+  .hist-item{margin:12px 16px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px}
+  .hist-item .th{width:40px;height:50px;border-radius:7px;background:linear-gradient(160deg,#ECF1F6,#DCE3EC);flex:0 0 auto}
+  .hist-item b{font-size:13px}.hist-item small{display:block;color:var(--ink-3);font-size:11px;margin-top:2px}
+  .hist-item .go{margin-left:auto;color:var(--ink-3);font-size:16px}
+  .hist-item .badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px;background:var(--brand-50);color:var(--brand-700)}
+
+  /* 动效规范 */
+  .motion-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:26px}
+  .motion-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;box-shadow:var(--sh-1)}
+  .motion-card h4{font-size:14px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .motion-card h4 .d{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:14px;background:var(--brand-50);color:var(--brand-700)}
+  .motion-row{display:flex;align-items:center;font-size:12.5px;padding:7px 0;border-bottom:1px solid var(--divider);color:var(--ink-2)}
+  .motion-row:last-child{border-bottom:0}
+  .motion-row .k{width:96px;flex:0 0 auto;color:var(--ink)}
+  .motion-row .v{margin-left:auto;font-family:ui-monospace,monospace;font-size:11px;background:var(--surface);padding:2px 7px;border-radius:6px;color:var(--ink-3)}
+  .gesture-line{display:flex;align-items:center;gap:10px;font-size:13px;padding:8px 0;border-bottom:1px solid var(--divider);color:var(--ink-2)}
+  .gesture-line:last-child{border-bottom:0}
+  .gesture-line .g{font-size:16px;width:26px;text-align:center}
+
+  /* 交互状态 */
+  .spec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:26px}
+  .spec-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;box-shadow:var(--sh-1)}
+  .spec-card h4{font-size:14px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .spec-card h4 .d{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:14px}
+  .state-line{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--divider);font-size:13px}
+  .state-line:last-child{border-bottom:0}
+  .state-line .pill{font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;margin-left:auto}
+  .pill.load{background:var(--brand-50);color:var(--brand-700)}.pill.err{background:#FDECEC;color:var(--danger)}
+  .pill.empty{background:var(--surface);color:var(--ink-2)}.pill.ok{background:var(--brand-50);color:var(--brand-700)}
+
+  /* 改进对照 */
+  .diff{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+  .diff .col{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;box-shadow:var(--sh-1)}
+  .diff .col h4{font-size:14px;margin-bottom:12px}
+  .diff .col.v1 h4{color:var(--ink-3)}.diff .col.v2 h4{color:var(--brand-700)}
+  .diff ul{list-style:none}.diff li{font-size:13px;color:var(--ink-2);padding:7px 0 7px 22px;position:relative}
+  .diff .v1 li::before{content:"•";position:absolute;left:4px;color:var(--ink-3)}
+  .diff .v2 li::before{content:"✓";position:absolute;left:2px;color:var(--brand-700);font-weight:700}
+
+  footer{padding:48px 0 64px;text-align:center;color:var(--ink-3);font-size:13px}
+  footer b{color:var(--ink-2)}
+
+  @media(max-width:1080px){
+    .hero-grid{grid-template-columns:1fr}.principles{grid-template-columns:repeat(2,1fr)}
+    .swatches{grid-template-columns:repeat(4,1fr)}.screens{grid-template-columns:repeat(2,1fr)}
+    .type-scale,.color-grid,.comp-grid,.spec-grid,.tokens,.diff,.motion-grid{grid-template-columns:1fr}
+  }
+  @media(max-width:680px){.screens{grid-template-columns:1fr}.swatches{grid-template-columns:repeat(3,1fr)}.topnav nav{display:none}}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="topnav-in">
+    <div class="brandmark"><span class="logo">✦</span> AI 求职一站式 · 设计系统</div>
+    <nav><a href="#system">设计系统</a><a href="#screens">界面 Mockup</a><a href="#motion">动效手势</a><a href="#interaction">交互规范</a><a href="#a11y">无障碍</a><a href="#diff">改进对照</a></nav>
+  </div>
+</div>
+
+<header class="hero wrap">
+  <div class="hero-grid">
+    <div>
+      <span class="version-badge">v2.1 · 精修版 · 含交互细节 + WXSS 变量</span>
+      <h1>让求职材料<br><span class="grad">8 分钟</span>漂亮搞定</h1>
+      <p>面向微信用户的「AI 求职一站式」全新界面设计。本版在 v2.0 基础上<b>精修全部 9 个页面</b>、<b>逐屏细化交互细节</b>（手势/动效/反馈），并附<b>可直接落地的 WXSS 变量文件</b>。</p>
+      <div class="hero-tags">
+        <span class="tag">🎯 向导式闭环</span><span class="tag">🆓 全免费架构</span>
+        <span class="tag">♿ WCAG AA</span><span class="tag">📱 移动优先</span><span class="tag">🎬 动效规范</span>
+      </div>
+      <div class="hero-meta">
+        <div><span>设计风格</span><b>简洁 · 商务 · 温暖</b></div>
+        <div><span>主色 / 辅色</span><b>翠绿 / 紫罗兰</b></div>
+        <div><span>覆盖页面</span><b>9 个核心屏</b></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="row"><div class="ic" style="background:var(--brand-50)">📷</div><div><b>证件照工具链</b><small>抠图 · 换底 · 去水印 · 修图 · 合规 · 导出</small></div></div>
+      <div class="row"><div class="ic" style="background:var(--accent-50)">📄</div><div><b>简历制作 + AI 润色</b><small>5 套模板 · 多格式导入 · STAR 量化改写</small></div></div>
+      <div class="row"><div class="ic" style="background:var(--brand-50)">🤖</div><div><b>混元 Hy3 / Hy Image 3.0</b><small>10 亿 token + 10 万张生图，6 个月免费</small></div></div>
+      <div class="row"><div class="ic" style="background:var(--accent-50)">🔗</div><div><b>微信原生分享裂变</b><small>转发 HR · 朋友圈卡片 · 存相册</small></div></div>
+    </div>
+  </div>
+</header>
+
+<section class="wrap">
+  <span class="eyebrow">设计理念</span>
+  <h2 class="title">四条原则，贯穿每一个像素</h2>
+  <p class="lead">相比 v1.0 的「工具化扁平」，v2.x 更强调「被信任的助手感」——克制的色彩、明确的状态、友好的引导，降低求职场景下的焦虑感。</p>
+  <div class="principles">
+    <div class="principle"><div class="num">01</div><h4>一站式不迷路</h4><p>双入口共享同一工作流实例，步骤条 + 进度提示让用户永远知道「我在哪、下一步去哪」。</p></div>
+    <div class="principle"><div class="num">02</div><h4>免费也要有质感</h4><p>渐变、留白与柔和阴影营造专业感，避免「免费工具 = 廉价」的心理暗示。</p></div>
+    <div class="principle"><div class="num">03</div><h4>状态永远可见</h4><p>加载、错误、空态、破坏操作四态全覆盖，AI 等待不再黑盒，合规失败给修正指引。</p></div>
+    <div class="principle"><div class="num">04</div><h4>人人可用</h4><p>对比度 ≥ 4.5:1、44px 触控目标、读屏标签与 reduced-motion，覆盖无障碍基线。</p></div>
+  </div>
+</section>
+
+<section class="wrap" id="system">
+  <span class="eyebrow purple">Design System</span>
+  <h2 class="title">统一的设计令牌与组件库</h2>
+  <p class="lead">以微信小程序原生（WXML/WXSS）为落地框架。所有令牌已翻译为 <code>variables.wxss</code>（CSS 自定义属性 + rpx 换算），可直接 <code>@import</code> 进 <code>app.wxss</code>。</p>
+
+  <div class="color-grid">
+    <div class="color-group"><h4>品牌与主色</h4>
+      <div class="color-line"><span class="dot" style="background:var(--brand)"></span> 主品牌绿 Brand <code>#16A36E</code></div>
+      <div class="color-line"><span class="dot" style="background:var(--brand-700)"></span> 深绿 Brand-700 <code>#0F7E53</code></div>
+      <div class="color-line"><span class="dot" style="background:var(--accent)"></span> 辅色紫 Accent（AI/简历）<code>#6C5CE7</code></div>
+      <div class="color-line"><span class="dot" style="background:var(--accent-700)"></span> 深紫 Accent-700 <code>#574BC2</code></div>
+    </div>
+    <div class="color-group"><h4>中性与语义</h4>
+      <div class="color-line"><span class="dot" style="background:var(--page)"></span> 页面底 Page <code>#F5F6F8</code></div>
+      <div class="color-line"><span class="dot" style="background:var(--ink)"></span> 文字主 Ink <code>#15181C</code></div>
+      <div class="color-line"><span class="dot" style="background:var(--success)"></span> 成功 Success <code>#16A36E</code></div>
+      <div class="color-line"><span class="dot" style="background:var(--warning)"></span> 警告 Warning <code>#F5A623</code></div>
+      <div class="color-line"><span class="dot" style="background:var(--danger)"></span> 危险 Danger <code>#E5484D</code></div>
+    </div>
+  </div>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:var(--brand)"></div><div class="meta"><b>Brand</b><small>#16A36E</small></div></div>
+    <div class="sw"><div class="chip" style="background:var(--brand-50)"></div><div class="meta"><b>Brand-50</b><small>#E8F6EF</small></div></div>
+    <div class="sw"><div class="chip" style="background:var(--accent)"></div><div class="meta"><b>Accent</b><small>#6C5CE7</small></div></div>
+    <div class="sw"><div class="chip" style="background:var(--accent-50)"></div><div class="meta"><b>Accent-50</b><small>#EFEDFD</small></div></div>
+    <div class="sw"><div class="chip" style="background:var(--ink)"></div><div class="meta"><b>Ink</b><small>#15181C</small></div></div>
+    <div class="sw"><div class="chip" style="background:var(--surface)"></div><div class="meta"><b>Surface</b><small>#F1F3F5</small></div></div>
+  </div>
+
+  <h4 style="margin-top:34px;font-size:15px">字体系统（PingFang SC / 系统字体栈）</h4>
+  <div class="type-scale">
+    <div class="type-row"><div class="spec">Display · 700<br>26px / 1.2</div><div class="sample" style="font-size:26px;font-weight:700">AI 求职一站式<span><b>页面大标题 / Hero</b></span></div></div>
+    <div class="type-row"><div class="spec">H1 · 600<br>18px / 1.4</div><div class="sample" style="font-size:18px;font-weight:600">证件照制作<span><b>导航栏标题</b></span></div></div>
+    <div class="type-row"><div class="spec">H2 · 600<br>16px / 1.5</div><div class="sample" style="font-size:16px;font-weight:600">合规检测结果<span><b>卡片 / 区块标题</b></span></div></div>
+    <div class="type-row"><div class="spec">Body · 400<br>14px / 1.6</div><div class="sample" style="font-size:14px">管理 3 个产品线从 0 到 1，交付率 95%<span><b>正文 / 列表</b></span></div></div>
+    <div class="type-row"><div class="spec">Caption · 400<br>12px / 1.5</div><div class="sample" style="font-size:12px;color:var(--ink-2)">支持 PDF · Word · 图片 · 文本<span><b>辅助文字</b></span></div></div>
+    <div class="type-row"><div class="spec">Data · 500<br>20px / 1.3</div><div class="sample" style="font-size:20px;font-weight:500">92<span><b>分数 / 关键指标</b></span></div></div>
+  </div>
+
+  <div class="tokens">
+    <div class="token-card"><h4>间距（4px 基准）</h4>
+      <div class="sp-boxes"><div class="sp" style="width:16px;height:24px">4</div><div class="sp" style="width:32px;height:24px">8</div><div class="sp" style="width:48px;height:24px">12</div><div class="sp" style="width:64px;height:24px">16</div><div class="sp" style="width:96px;height:24px">24</div></div>
+      <p style="font-size:12px;color:var(--ink-3);margin-top:12px">页面 padding 16 · 卡片内 16 · 组件 gap 12 · 区块 20</p></div>
+    <div class="token-card"><h4>圆角</h4>
+      <div class="radius-demo"><div class="r" style="border-radius:8px">8</div><div class="r" style="border-radius:12px">12</div><div class="r" style="border-radius:16px">16</div><div class="r" style="border-radius:999px">Pill</div></div>
+      <p style="font-size:12px;color:var(--ink-3);margin-top:12px">输入 8 · 按钮/卡片 12-16 · 头像/色块 圆 · Chip 胶囊</p></div>
+    <div class="token-card"><h4>阴影与层级</h4>
+      <div class="shadow-demo"><div class="s" style="box-shadow:var(--sh-1)">1</div><div class="s" style="box-shadow:var(--sh-2)">2</div><div class="s" style="box-shadow:var(--sh-3)">3</div></div>
+      <p style="font-size:12px;color:var(--ink-3);margin-top:12px">1 静态 · 2 悬浮/激活 · 3 抽屉/弹层/手机框</p></div>
+  </div>
+
+  <div class="rpx-note">
+    <b>rpx 换算说明：</b>小程序逻辑宽度 750rpx = 375pt，故 1px(CSS) ≈ 2rpx。字号 12/14/16/18/20/26px → 24/28/32/36/40/52rpx；间距 4/8/12/16/20/24px → 8/16/24/32/40/48rpx；按钮高 48px → 96rpx。完整映射见 <code>variables.wxss</code>。
+  </div>
+
+  <h4 style="margin-top:34px;font-size:15px">基础组件库</h4>
+  <div class="comp-grid">
+    <div class="comp-card"><h4>按钮 Buttons</h4><div class="stage">
+      <button class="btn btn-primary">主操作</button><button class="btn btn-accent">AI 润色</button>
+      <button class="btn btn-soft">次操作</button><button class="btn btn-ghost">幽灵</button>
+      <button class="btn btn-primary btn-sm">小号</button><button class="btn btn-primary btn-block">整行主按钮</button>
+    </div></div>
+    <div class="comp-card"><h4>输入与选择 Inputs</h4><div class="stage" style="flex-direction:column;align-items:flex-start">
+      <input class="input" placeholder="请输入姓名 / 职位" />
+      <div class="seg"><button>标准</button><button class="on">增强</button></div>
+      <div style="display:flex;gap:8px"><span class="chip on">白底</span><span class="chip">蓝底</span><span class="chip accent on">紫底</span></div>
+    </div></div>
+    <div class="comp-card"><h4>滑块与开关 Sliders</h4><div class="stage" style="flex-direction:column;align-items:flex-start">
+      <div class="slider"><div class="fill"></div><div class="knob"></div></div><div class="slider-val">亮度 +42</div>
+      <div style="display:flex;align-items:center;gap:12px"><span style="font-size:13px;color:var(--ink-2)">含回执</span><div class="toggle"></div></div>
+    </div></div>
+    <div class="comp-card"><h4>反馈状态 Feedback</h4><div class="stage" style="flex-direction:column;align-items:flex-start">
+      <div class="progress"><div class="bar"></div></div>
+      <div class="toast"><span class="ic">!</span> 照片含违规内容，已返回</div>
+      <div class="skeleton"></div><div class="empty">还没有制作过简历<br>点击下方开始制作 →</div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ====== 界面 Mockup（精修 + 交互细节） ====== -->
+<section class="wrap" id="screens">
+  <span class="eyebrow">High-Fidelity Screens · 精修</span>
+  <h2 class="title">9 个核心界面（视觉精修 + 交互细节）</h2>
+  <p class="lead">375×667 视口手机框（等比缩放）。每屏下方列出<b>逐条交互细节</b>：手势、过渡、反馈。证件照编辑流为最高优先级核心页面。</p>
+
+  <div class="screens">
+
+    <!-- 1 首页 -->
+    <div class="screen-col">
+      <div class="phone"><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="dots"><i></i><i></i><i></i><span style="margin-left:4px">100%</span></span></div>
+        <div class="scr-body">
+          <div class="home-hero">
+            <div class="kicker"><span class="free">全免费</span> 微信小程序 · 混元 AI 驱动</div>
+            <h3>证件照 + 简历<br>8 分钟搞定</h3>
+            <p>AI 职业照 · 抠图换底 · 简历润色，一站式闭环</p>
+          </div>
+          <div class="entry-card"><div class="eic">📷</div><div><b>证件照制作</b><small>AI 职业照 · 抠图 · 修图 · 合规导出</small></div><div class="arrow">›</div></div>
+          <div class="entry-card purple"><div class="eic">📄</div><div><b>简历制作</b><small>导入 · AI 润色 · 5 套模板 · 导出</small></div><div class="arrow">›</div></div>
+          <div class="free-strip"><div><b>10亿</b><small>Token 免费</small></div><div><b>10万</b><small>生图免费</small></div><div><b>12</b><small>工具全免费</small></div></div>
+          <div class="tabbar"><div class="tb on"><span class="ti">🏠</span>首页</div><div class="tb"><span class="ti">📷</span>证件照</div><div class="tb"><span class="ti">📄</span>简历</div><div class="tb"><span class="ti">👤</span>我的</div></div>
+        </div>
+      </div></div>
+      <div class="cap"><b>① 首页（双入口）</b><small>翠绿渐变 Hero 建立信任；左绿右紫区分证件照/简历；底部免费实力条降决策门槛。</small></div>
+      <div class="ix"><div class="ixh">⚡ 交互细节</div><ul>
+        <li><b>点击入口卡</b>：scale(.97) 按压反馈 120ms，左滑微位移 8rpx</li>
+        <li><b>卡片左侧色条</b>：证件照绿 / 简历紫，强化语义记忆</li>
+        <li><b>底部 TabBar</b>：当前项绿色 + 投影，切换 200ms 淡入</li>
+        <li><b>免费条数字</b>：进入视口时 0→目标值 600ms 滚动动效</li>
+      </ul></div>
+    </div>
+
+    <!-- 2 证件照编辑流 -->
+    <div class="screen-col">
+      <div class="phone"><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="dots"><i></i><i></i><i></i><span style="margin-left:4px">100%</span></span></div>
+        <div class="scr-body">
+          <div class="nav-bar"><div class="back">‹</div><div class="ttl">编辑</div><div class="sub">步 2 / 6</div></div>
+          <div class="photo-preview">
+            <div class="ai-chip">🤖 AI 处理中 62%</div>
+            <div class="figure"></div>
+            <div class="dots"><i></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="tool-tabs">
+            <div class="tt">抠图</div><div class="tt on">去背景</div><div class="tt">去水印</div><div class="tt">修图</div><div class="tt">检测</div><div class="tt">导出</div>
+          </div>
+          <div class="param-panel">
+            <div class="lbl"><span>背景颜色</span><span class="v">白底</span></div>
+            <div class="bg-colors">
+              <div class="c on" style="background:#fff"></div><div class="c" style="background:#438edb"></div>
+              <div class="c" style="background:#d9001b"></div><div class="c" style="background:#1a73e8"></div><div class="c" style="background:#f0f0f0"></div>
+            </div>
+            <div class="lbl" style="margin-top:12px">或上传自定义背景图</div>
+            <button class="btn btn-soft btn-sm">＋ 自定义背景</button>
+          </div>
+          <div class="action-bar"><button class="btn btn-ghost">重置</button><button class="btn btn-primary">确认换底</button></div>
+        </div>
+      </div></div>
+      <div class="cap"><b>② 证件照编辑流 ⭐核心</b><small>步骤条「步 2/6」防迷路；横滑工具 Tab；当前 Tab 绿高亮；参数面板随 Tab 切换；底部固定操作栏。</small></div>
+      <div class="ix"><div class="ixh">⚡ 交互细节</div><ul>
+        <li><b>工具 Tab 横滑</b>：scroll-x 惯性滚动，激活项绿色胶囊 + 8ms 回弹</li>
+        <li><b>预览区换底</b>：选色后 300ms 淡入新底色，非硬切</li>
+        <li><b>AI 处理中</b>：紫色浮 chip 显示百分比，处理完自动消失</li>
+        <li><b>重置按钮</b>：点击弹确认「放弃当前编辑？」，防误触</li>
+        <li><b>底部栏常驻</b>：上一步/确认换底，确认后 Toast「已应用」</li>
+      </ul></div>
+    </div>
+
+    <!-- 3 合规检测 -->
+    <div class="screen-col">
+      <div class="phone"><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="dots"><i></i><i></i><i></i><span style="margin-left:4px">100%</span></span></div>
+        <div class="scr-body">
+          <div class="nav-bar"><div class="back">‹</div><div class="ttl">合规检测</div></div>
+          <div class="detect-banner"><div class="big">✓</div><div><b>检测通过</b><small>综合得分 92 · 可用于证件照回执</small></div></div>
+          <div class="detect-list">
+            <div class="detect-item"><div class="ring" style="background:var(--success)">80</div><div class="nm"><b>光照检测</b><small>光线均匀，无过曝</small></div><div class="pf ok">通过</div></div>
+            <div class="detect-item fail"><div class="ring" style="background:var(--warning)">45</div><div class="nm"><b>姿态检测</b><small>头部略右偏，请正对相机</small></div><div class="pf no">未通过</div></div>
+            <div class="detect-item"><div class="ring" style="background:var(--success)">95</div><div class="nm"><b>遮挡检测</b><small>无遮挡物</small></div><div class="pf ok">通过</div></div>
+            <div class="detect-item"><div class="ring" style="background:var(--success)">70</div><div class="nm"><b>背景检测</b><small>纯色背景合规</small></div><div class="pf ok">通过</div></div>
+            <div class="detect-item"><div class="ring" style="background:var(--success)">100</div><div class="nm"><b>尺寸检测</b><small>比例标准</small></div><div class="pf ok">通过</div></div>
+            <div class="detect-item"><div class="ring" style="background:var(--success)">90</div><div class="nm"><b>人脸检测</b><small>清晰，居中</small></div><div class="pf ok">通过</div></div>
+          </div>
+          <div class="action-bar"><button class="btn btn-ghost">重新拍照</button><button class="btn btn-primary">使用当前照片</button></div>
+        </div>
+      </div></div>
+      <div class="cap"><b>③ 合规检测</b><small>顶部大标记「通过/未通过」+ 综合分；6 项逐项评分环（绿/橙）；未过项给修正建议并红框高亮。</small></div>
+      <div class="ix"><div class="ixh">⚡ 交互细节</div><ul>
+        <li><b>进入页面</b>：自动触发检测，圆环 0→分数 800ms 缓动</li>
+        <li><b>未过项</b>：红框高亮 + role="alert" 读屏播报建议</li>
+        <li><b>「使用当前照片」</b>：若含未过项置灰，强制先修正或确认风险</li>
+        <li><b>重新拍照</b>：调起相机，保留已编辑参数可重套</li>
+      </ul></div>
+    </div>
+
+    <!-- 4 简历导入 -->
+    <div class="screen-col">
+      <div class="phone"><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="dots"><i></i><i></i><i></i><span style="margin-left:4px">100%</span></span></div>
+        <div class="scr-body">
+          <div class="nav-bar"><div class="back">‹</div><div class="ttl">导入简历</div><div class="sub">步 1 / 4</div></div>
+          <div class="upload-box"><div class="uic">⬆</div><b>点击上传简历文件</b><small>或拖入文件，AI 自动解析填充</small></div>
+          <div class="fmt-chips"><span class="chip on">PDF</span><span class="chip">Word</span><span class="chip">图片</span><span class="chip">文本</span></div>
+          <div class="paste-box">或直接粘贴简历内容…<br>（支持多段文本，AI 自动结构化）</div>
+          <div class="ai-progress"><div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600"><span style="color:var(--accent-700)">🤖</span> AI 正在解析简历…</div><div class="ai-bar"><i></i></div><div style="font-size:11px;color:var(--ink-3);margin-top:8px">已识别 8 个字段 · 置信度 92%</div></div>
+          <div class="action-bar"><button class="btn btn-primary btn-block">下一步：选模板</button></div>
+        </div>
+      </div></div>
+      <div class="cap"><b>④ 简历导入</b><small>虚线框上传区 + 4 格式 Chip；支持粘贴文本；AI 解析用骨架进度条 + 置信度，降低黑盒焦虑。</small></div>
+      <div class="ix"><div class="ixh">⚡ 交互细节</div><ul>
+        <li><b>点击上传区</b>：调起微信 choosableFile，按压态底色加深</li>
+        <li><b>格式 Chip</b>：单选高亮，切换即更新解析适配器提示</li>
+        <li><b>解析中</b>：骨架 shimmer + 紫条进度，实时显示字段数</li>
+        <li><b>解析完成</b>：逐字段标注「AI/直接」来源，可点改</li>
+        <li><b>下一步</b>：未解析出内容时禁用并提示「先上传或粘贴」</li>
+      </ul></div>
+    </div>
+
+    <!-- 5 模板选择 -->
+    <div class="screen-col">
+      <div class="phone"><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="dots"><i></i><i></i><i></i><span style="margin-left:4px">100%</span></span></div>
+        <div class="scr-body">
+          <div class="nav-bar"><div class="back">‹</div><div class="ttl">选择模板</div><div class="sub">步 2 / 4</div></div>
+          <div class="tpl-grid">
+            <div class="tpl on"><div class="thumb"><div class="ln w90"></div><div class="ln w70"></div><div class="blk"></div></div><div class="nm">简约 <span class="chk">✓</span></div></div>
+            <div class="tpl"><div class="thumb"><div class="ln w70" style="background:var(--brand-100)"></div><div class="ln w90"></div><div class="blk"></div></div><div class="nm">商务</div></div>
+            <div class="tpl"><div class="thumb"><div class="ln w50" style="background:var(--accent-100)"></div><div class="ln w90"></div><div class="blk"></div></div><div class="nm">创意</div></div>
+            <div class="tpl"><div class="thumb"><div class="ln w90"></div><div class="ln w50"></div><div class="blk"></div></div><div class="nm">学术</div></div>
+            <div class="tpl"><div class="thumb"><div class="ln w70"></div><div class="ln w90"></div><div class="blk"></div></div><div class="nm">应届</div></div>
+            <div class="tpl more"><div class="thumb"><span>＋</span></div><div class="nm">更多（P2）</div></div>
+          </div>
+          <div class="action-bar"><button class="btn btn-ghost">预览</button><button class="btn btn-primary">下一步：编辑</button></div>
+        </div>
+      </div></div>
+      <div class="cap"><b>⑤ 简历模板选择</b><small>3×2 网格 5 套 + 更多；缩略图示意排版；选中态绿边框 + 勾选；底部预览/下一步双按钮。</small></div>
+      <div class="ix"><div class="ixh">⚡ 交互细节</div><ul>
+        <li><b>点选模板</b>：选中绿边框 + 3px 外光晕 150ms，勾选标记弹入</li>
+        <li><b>预览</b>：全屏半透明遮罩 + 模板大图，下滑/点外关闭</li>
+        <li><b>「更多」</b>：P2 占位，点击 Toast「行业模板即将上线」</li>
+        <li><b>下一步</b>：未选时默认选中首项并高亮引导</li>
+      </ul></div>
+    </div>
+
+    <!-- 6 简历编辑器 -->
+    <div class="screen-col">
+      <div class="phone"><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="dots"><i></i><i></i><i></i><span style="margin-left:4px">100%</span></span></div>
+        <div class="scr-body">
+          <div class="nav-bar"><div class="back">‹</div><div class="ttl">编辑简历</div><div class="sub">步 3 / 4</div></div>
+          <div class="resume-mini">
+            <div class="rh"><div class="av"></div><div><b>张三 · 产品经理</b><small>期望城市：深圳</small></div></div>
+            <div class="rblk"><div class="hl"></div>工作经历 · 腾讯 · 2022–至今</div>
+            <div class="rblk sel">项目经验 · 从 0 到 1 搭建出海工具站</div>
+            <div class="rblk"><div class="hl"></div>教育背景 · 计算机科学 学士</div>
+            <div class="rblk" style="border-bottom:0"><div class="hl"></div>技能 · Figma / 数据分析 / 英语</div>
+          </div>
+          <div class="sheet">
+            <div class="grab"></div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">编辑「项目经验」</div>
+            <div class="sl-row">字号 <div class="track"><i></i></div> <span class="v">14px</span></div>
+            <div class="sl-row">粗细 <div class="track"><i style="left:60%"></i></div> <span class="v">粗体</span></div>
+            <div class="sl-row">对齐 <div class="track"><i style="left:50%"></i></div> <span class="v">居中</span></div>
+            <div class="action-bar" style="padding:12px 0 0;border:0"><button class="btn btn-ghost">取消</button><button class="btn btn-primary">保存</button></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap"><b>⑥ 简历元素级编辑器</b><small>实时预览点选元素高亮（蓝描边）；底部弹起属性 Sheet 改文字/字号/粗细/对齐；RFC6902 落库。</small></div>
+      <div class="ix"><div class="ixh">⚡ 交互细节</div><ul>
+        <li><b>点选元素</b>：蓝色描边 + 轻微放大 1.02，预览即时刷新</li>
+        <li><b>属性 Sheet</b>：从底部 280ms 缓动滑入，遮罩渐显</li>
+        <li><b>滑块调字号</b>：拖动实时改预览，停手 200ms 后落库节流</li>
+        <li><b>保存/取消</b>：保存 Toast「已更新」；取消还原快照</li>
+        <li><b>下滑 Sheet</b>：手势下滑关闭，触发阈值 100rpx</li>
+      </ul></div>
+    </div>
+
+    <!-- 7 AI 润色 -->
+    <div class="screen-col">
+      <div class="phone"><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="dots"><i></i><i></i><i></i><span style="margin-left:4px">100%</span></span></div>
+        <div class="scr-body">
+          <div class="nav-bar"><div class="back">‹</div><div class="ttl">AI 润色</div><div class="sub">3 / 6 处</div></div>
+          <div class="cmp">
+            <div class="sugg">💡 建议：量化了项目数量 + 成果指标，STAR 改写更可信</div>
+            <div class="blk"><div class="tag o">ORIGINAL</div><div class="txt del">负责项目管理，跟进进度。</div></div>
+            <div class="blk"><div class="tag n">AI OPTIMIZED</div><div class="txt add">管理 3 个产品线从 0 到 1，项目交付率 95%，获季度之星。</div></div>
+            <div class="blk" style="border:1px dashed var(--border);background:var(--surface)"><div class="tag o">JD 匹配</div><div class="txt" style="color:var(--ink-2)">匹配度 88% · 已强化「0→1」「交付率」关键词</div></div>
+          </div>
+          <div class="action-bar"><button class="btn btn-ghost">跳过</button><button class="btn btn-soft">全部采纳</button><button class="btn btn-primary">采纳</button></div>
+        </div>
+      </div></div>
+      <div class="cap"><b>⑦ AI 润色对比</b><small>上下对比：原文删除线灰 vs 优化绿；建议条紫色；JD 匹配度；逐条翻页 + 单条/全部采纳。</small></div>
+      <div class="ix"><div class="ixh">⚡ 交互细节</div><ul>
+        <li><b>采纳</b>：优化文本 300ms 绿→黑渐变并入简历，进度 +1</li>
+        <li><b>全部采纳</b>：二次确认「将改写 N 处」，批量动画</li>
+        <li><b>跳过</b>：左滑卡片移除，进入下一处</li>
+        <li><b>分页</b>：左右滑动翻页，顶部进度「3/6」同步</li>
+        <li><b>禁虚构</b>：采纳内容经 sanitize，悬停显示来源依据</li>
+      </ul></div>
+    </div>
+
+    <!-- 8 导出分享 -->
+    <div class="screen-col">
+      <div class="phone"><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="dots"><i></i><i></i><i></i><span style="margin-left:4px">100%</span></span></div>
+        <div class="scr-body">
+          <div class="nav-bar"><div class="back">‹</div><div class="ttl">导出与分享</div><div class="sub">步 4 / 4</div></div>
+          <div class="spec-sel"><span>证件照规格</span><span class="v">一寸 295×413 ›</span></div>
+          <div class="receipt-row"><span>含回执排版（城市拼版）</span><div class="toggle"></div></div>
+          <div class="share-card"><div class="sc-ttl">张三 的简历</div><div class="sc-sub">AI 求职一站式 · 混元 AI 驱动</div><div class="sc-ph"></div><div class="sc-qr">码</div></div>
+          <div class="action-bar" style="flex-wrap:wrap"><button class="btn btn-ghost" style="flex:1">存相册</button><button class="btn btn-accent" style="flex:1">转发 HR</button><button class="btn btn-primary btn-block" style="margin-top:8px">导出 PDF</button></div>
+        </div>
+      </div></div>
+      <div class="cap"><b>⑧ 导出与分享</b><small>规格下拉 + 回执开关；分享卡片 1600×900 竖版预览（含证件照/姓名/小程序码）；PDF/Word 双导出 + 原生转发。</small></div>
+      <div class="ix"><div class="ixh">⚡ 交互细节</div><ul>
+        <li><b>规格下拉</b>：底部 Picker 滑入，6 规格（一寸/二寸/护照/美签/英签/申根）</li>
+        <li><b>回执开关</b>：开启展开城市选择 + 数量步进器</li>
+        <li><b>导出 PDF</b>：Spinner + 文件名，完成自动预览</li>
+        <li><b>转发 HR</b>：调起 wx.shareFileMessage，失败 Toast 兜底</li>
+        <li><b>存相册</b>：需授权，拒绝时引导设置页</li>
+      </ul></div>
+    </div>
+
+    <!-- 9 我的 -->
+    <div class="screen-col">
+      <div class="phone"><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="dots"><i></i><i></i><i></i><span style="margin-left:4px">100%</span></span></div>
+        <div class="scr-body">
+          <div class="me-head"><div class="av">👤</div><div><b>微信用户</b><small>已静默登录 · 数据云端同步</small></div></div>
+          <div class="me-stats"><div><b>5</b><small>简历</small></div><div><b>12</b><small>证件照</small></div><div><b>3</b><small>模板</small></div></div>
+          <div style="font-size:13px;font-weight:600;padding:16px 16px 0">历史记录</div>
+          <div class="hist-item"><div class="th"></div><div><b>张三_产品经理.pdf</b><small>2 小时前 · 已分享 HR</small></div><div class="badge">可改</div></div>
+          <div class="hist-item"><div class="th"></div><div><b>一寸蓝底证件照</b><small>昨天 · 含回执</small></div><div class="badge">可改</div></div>
+          <div class="hist-item"><div class="th"></div><div><b>李四_应届生.pdf</b><small>3 天前 · 草稿</small></div><div class="go">›</div></div>
+          <div class="tabbar"><div class="tb"><span class="ti">🏠</span>首页</div><div class="tb"><span class="ti">📷</span>证件照</div><div class="tb"><span class="ti">📄</span>简历</div><div class="tb on"><span class="ti">👤</span>我的</div></div>
+        </div>
+      </div></div>
+      <div class="cap"><b>⑨ 我的 / 历史</b><small>静默 openid 登录 + 本地缓存兜底；统计卡 + 历史列表可查可改续接；与首页共享底部 TabBar。</small></div>
+      <div class="ix"><div class="ixh">⚡ 交互细节</div><ul>
+        <li><b>历史项</b>：点击进入对应 workflow 续接，草稿标「草稿」</li>
+        <li><b>左滑历史项</b>：出现「删除」红按钮，二次确认</li>
+        <li><b>登录失效</b>：静默 wx.login 重登，本地缓存兜底不丢稿</li>
+        <li><b>统计卡</b>：进入视口数字滚动动效</li>
+      </ul></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 动效与手势规范 -->
+<section class="wrap" id="motion">
+  <span class="eyebrow purple">Motion & Gesture</span>
+  <h2 class="title">动效与手势规范</h2>
+  <p class="lead">统一动效语言：以「缓出」为主，时长克制（≤300ms），尊重 reduced-motion。所有可交互元素触控目标 ≥ 44px（88rpx）。</p>
+  <div class="motion-grid">
+    <div class="motion-card"><h4><span class="d">🎬</span> 过渡时长与缓动</h4>
+      <div class="motion-row"><span class="k">页面切换</span><span>300ms · ease-out</span><span class="v">--dur-page</span></div>
+      <div class="motion-row"><span class="k">Sheet 滑入</span><span>280ms · ease-out</span><span class="v">--dur-sheet</span></div>
+      <div class="motion-row"><span class="k">按钮按压</span><span>120ms · scale</span><span class="v">--dur-press</span></div>
+      <div class="motion-row"><span class="k">Tab/色块切换</span><span>150ms · ease</span><span class="v">--dur-tab</span></div>
+      <div class="motion-row"><span class="k">数字滚动</span><span>600ms · ease-out</span><span class="v">--dur-count</span></div>
+      <div class="motion-row"><span class="k">圆环评分</span><span>800ms · ease-out</span><span class="v">--dur-ring</span></div>
+    </div>
+    <div class="motion-card"><h4><span class="d">👆</span> 手势与触控目标</h4>
+      <div class="gesture-line"><span class="g">👆</span> 点击 / 轻触：主操作反馈，目标 ≥ 88rpx</div>
+      <div class="gesture-line"><span class="g">↔️</span> 横滑：工具 Tab、模板、润色翻页</div>
+      <div class="gesture-line"><span class="g">↕️</span> 上滑：属性 Sheet 关闭（阈值 100rpx）</div>
+      <div class="gesture-line"><span class="g">✋</span> 长按/拖拽：去水印涂抹 mask（Canvas）</div>
+      <div class="gesture-line"><span class="g">⬇️</span> 下拉：Picker（规格/城市）展开</div>
+      <div class="gesture-line"><span class="g">↩️</span> 左滑：历史项删除、润色跳过</div>
+    </div>
+  </div>
+</section>
+
+<!-- 交互状态 -->
+<section class="wrap" id="interaction">
+  <span class="eyebrow purple">Interaction Spec</span>
+  <h2 class="title">四态规范：加载 · 错误 · 空态 · 破坏操作</h2>
+  <p class="lead">求职场景容错成本高。所有异步与敏感操作都需明确反馈，杜绝「黑盒等待」与「误操作不可逆」。</p>
+  <div class="spec-grid">
+    <div class="spec-card"><h4><span class="d" style="background:var(--brand-50);color:var(--brand-700)">⏳</span> 加载态</h4>
+      <div class="state-line">AI 生成职业照 <span class="pill load">进度条 + 文案</span></div>
+      <div class="state-line">AI 解析简历 <span class="pill load">骨架屏 shimmer</span></div>
+      <div class="state-line">抠图 / 去水印 <span class="pill load">透明度脉冲 + %</span></div>
+      <div class="state-line">PDF 导出 <span class="pill load">Spinner + 文件名</span></div>
+    </div>
+    <div class="spec-card"><h4><span class="d" style="background:#FDECEC;color:var(--danger)">⚠️</span> 错误态</h4>
+      <div class="state-line">生图额度耗尽 <span class="pill err">全屏插屏 + 看广告</span></div>
+      <div class="state-line">AI 服务不可用 <span class="pill err">Toast + 重试</span></div>
+      <div class="state-line">内容安全拦截 <span class="pill err">Toast + 返回</span></div>
+      <div class="state-line">合规不通过 <span class="pill err">红叉 + 修正指引</span></div>
+    </div>
+    <div class="spec-card"><h4><span class="d" style="background:var(--surface);color:var(--ink-2)">○</span> 空态</h4>
+      <div class="state-line">历史记录为空 <span class="pill empty">插图 + 开始制作</span></div>
+      <div class="state-line">模板加载中 <span class="pill empty">3 骨架卡片</span></div>
+      <div class="state-line">导入无内容 <span class="pill empty">引导粘贴/上传</span></div>
+    </div>
+    <div class="spec-card"><h4><span class="d" style="background:var(--warning);color:#fff">🔒</span> 破坏操作确认</h4>
+      <div class="state-line">重置照片 <span class="pill err">确认放弃编辑？</span></div>
+      <div class="state-line">删除简历 <span class="pill err">确认删除？</span></div>
+      <div class="state-line">退出工作流 <span class="pill ok">进度已保存</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 无障碍 -->
+<section class="wrap" id="a11y">
+  <span class="eyebrow">Accessibility · WCAG AA</span>
+  <h2 class="title">人人可用的底线</h2>
+  <div class="color-grid">
+    <div class="color-group"><h4>视觉与对比</h4>
+      <div class="color-line"><span class="dot" style="background:var(--brand)"></span> 文字/背景对比 ≥ 4.5:1 <code>AA</code></div>
+      <div class="color-line"><span class="dot" style="background:var(--info)"></span> 大字号对比 ≥ 3:1 <code>AA Large</code></div>
+      <div class="color-line"><span class="dot" style="background:var(--surface)"></span> 不依赖颜色传达状态 <code>图标+文案</code></div>
+    </div>
+    <div class="color-group"><h4>操作与读屏</h4>
+      <div class="color-line"><span class="dot" style="background:var(--accent)"></span> 触控目标 ≥ 44px <code>最小尺寸</code></div>
+      <div class="color-line"><span class="dot" style="background:var(--brand)"></span> 所有按钮 aria-label <code>读屏</code></div>
+      <div class="color-line"><span class="dot" style="background:var(--warning)"></span> 合规失败 role="alert" <code>播报</code></div>
+      <div class="color-line"><span class="dot" style="background:var(--ink-3)"></span> 尊重 reduced-motion <code>动效降级</code></div>
+    </div>
+  </div>
+</section>
+
+<!-- 改进对照 -->
+<section class="wrap" id="diff">
+  <span class="eyebrow">What's New vs v1.0</span>
+  <h2 class="title">相较原规范 v1.0 的关键改进</h2>
+  <div class="diff">
+    <div class="col v1"><h4>v1.0（原规范）</h4><ul>
+      <li>工具化扁平，双主色并列无主次</li><li>纯色填充，缺乏层级与质感</li>
+      <li>间距/圆角令牌偏少，统一性弱</li><li>组件样例以文字描述为主，缺可视化</li>
+      <li>状态反馈仅列场景，缺统一规范</li><li>暗色/英文为 P2 留白</li>
+    </ul></div>
+    <div class="col v2"><h4>v2.1（本次设计）</h4><ul>
+      <li>翠绿为主、紫罗兰为辅，主次分明有语义</li><li>渐变 + 柔和阴影 + 留白，专业信任感</li>
+      <li>完整令牌 + rpx 换算 + WXSS 变量文件</li>
+      <li>9 屏高保真 + 逐屏交互细节 + 组件库可视化</li>
+      <li>四态规范 + 动效/手势规范，含时长与缓动</li><li>暗色/英文扩展路径清晰标注</li>
+    </ul></div>
+  </div>
+</section>
+
+<footer>
+  <b>AI 求职一站式 · UI 设计方案 v2.1（精修版）</b><br>
+  UI Designer · 基于 PRD v1.0 + 蓝图 v2.4 + UI 规范 v1.0 重构 · 微信小程序原生（WXML/WXSS）<br>
+  配套交付：<code>miniprogram-design-tokens/variables.wxss</code> + <code>components.wxss</code> + <code>README.md</code><br>
+  证件照编辑页为最高优先级核心页面，建议先行开发。
+</footer>
+
+</body>
+</html>
