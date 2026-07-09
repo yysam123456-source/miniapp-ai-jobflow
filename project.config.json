@@ -2,7 +2,7 @@
   "miniprogramRoot": "./",
   "cloudfunctionRoot": "cloudfunctions/",
   "projectname": "miniapp-ai-jobflow",
-  "appid": "wxAPPID_PLACEHOLDER",
+  "appid": "wxf5fcd828dc79d7ba",
   "description": "AI 求职一站式 · 证件照编辑 + 简历制作 + AI 润色（全免费 CloudBase + 混元）",
   "setting": {
     "urlCheck": false,
