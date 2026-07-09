@@ -49,6 +49,14 @@ else
 fi
 echo "✅ 使用 CLI： $TCB"
 
+# ---- 2.5 可选的「环境 API 密钥」登录（推荐，无需腾讯云根账号密钥）--------------
+# 在 CloudBase 控制台 → 环境 → 环境设置 → 访问凭证 生成「环境 API 密钥」，
+# 然后： CLOUDBASE_API_KEY=<密钥> bash deploy.sh <ENV_ID>
+if [ -n "${CLOUDBASE_API_KEY:-}" ]; then
+  echo "▶ 使用环境 API 密钥登录 ..."
+  $TCB login --cloudbase-api-key "$CLOUDBASE_API_KEY" -e "$ENV_ID" 2>&1 | tail -3 || echo "   ⚠️  API Key 登录失败，请检查密钥与 env 是否匹配"
+fi
+
 # ---- 3. 同步公共模块 ----------------------------------------------------------
 echo "▶ 同步 _shared 到各云函数 ..."
 bash cloudfunctions/sync-shared.sh
@@ -66,7 +74,7 @@ for fn in "${FUNCS[@]}"; do
     continue
   fi
   echo "   → $fn"
-  if $TCB fn deploy "$fn" --dir "cloudfunctions/$fn" -e "$ENV_ID" --remote-npm-install --force 2>&1 | tail -3; then
+  if $TCB fn deploy "$fn" --dir "cloudfunctions/$fn" -e "$ENV_ID" --remote-npm-install --force --yes 2>&1 | tail -3; then
     echo "   ✅ $fn 部署完成"
   else
     echo "   ❌ $fn 部署失败（详见上方日志）"
@@ -79,7 +87,7 @@ COLS=(user resume asset quota workflow)
 echo "▶ 创建数据库集合 ..."
 for col in "${COLS[@]}"; do
   echo "   → $col"
-  $TCB db create "$col" -e "$ENV_ID" 2>&1 | tail -1 || echo "   （已存在则忽略）"
+  $TCB db create "$col" -e "$ENV_ID" --yes 2>&1 | tail -1 || echo "   （已存在则忽略）"
 done
 
 # ---- 6. 结果 & 前端上传指引 ---------------------------------------------------
